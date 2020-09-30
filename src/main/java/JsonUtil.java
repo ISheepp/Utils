@@ -12,7 +12,6 @@ public class JsonUtil {
 
     public static String getJson(Object object) {
 
-
         ObjectMapper mapper = new ObjectMapper();
         //关闭时间戳功能
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);

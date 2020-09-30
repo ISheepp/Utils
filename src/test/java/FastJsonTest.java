@@ -2,6 +2,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 
+
+
 /**
  * @Author ISheep
  * @Date 2020/9/29 20:05
@@ -30,6 +32,10 @@ public class FastJsonTest {
 
         System.out.println(person1);
 
+    }
+
+    @Test
+    public void test3(){
 
     }
 
