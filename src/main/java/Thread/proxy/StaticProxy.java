@@ -1,5 +1,7 @@
 package Thread.proxy;
 
+import org.omg.PortableServer.THREAD_POLICY_ID;
+
 /**
  * @author lin
  * @create 2020-10-04 20:54
@@ -8,12 +10,24 @@ package Thread.proxy;
 //静态代理模式总结
 //真实对象和代理对象都要实现同一个接口
 //代理对象要代理真实角色
-//
+
+//好处：
+    //代理对象可以做很多真实对象做不了的事情
+    //真实对象专注做自己的事情
 public class StaticProxy {
 
     public static void main(String[] args) {
-        WeddingCompany weddingCompany = new WeddingCompany(new You());
-        weddingCompany.HappyMarry();
+
+        You you = new You(); //你要结婚
+
+        //lambda表达式表示
+        new Thread( ()-> System.out.println("我爱你") ).start();
+
+        new WeddingCompany(new You()).HappyMarry();
+
+
+        // WeddingCompany weddingCompany = new WeddingCompany(you);
+        // weddingCompany.HappyMarry();
 
     }
 
