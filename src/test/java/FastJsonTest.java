@@ -3,7 +3,6 @@ import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
 
 
-
 /**
  * @Author ISheep
  * @Date 2020/9/29 20:05
@@ -12,7 +11,7 @@ import org.junit.Test;
 public class FastJsonTest {
 
     @Test
-    public void test(){
+    public void test() {
 
 
         Person person = new Person("林子洋", 22, "male");
@@ -35,7 +34,7 @@ public class FastJsonTest {
     }
 
     @Test
-    public void test3(){
+    public void test3() {
 
     }
 
