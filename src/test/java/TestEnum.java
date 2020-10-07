@@ -18,4 +18,9 @@ public class TestEnum {
                 "  \"age\": 22\n" +
                 "}";
     }
+
+    @Test
+    public void test(){
+
+    }
 }
