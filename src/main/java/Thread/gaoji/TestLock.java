@@ -26,7 +26,6 @@ class  TestLock2 implements Runnable{
 
     private final ReentrantLock lock = new ReentrantLock();  //可重用锁
 
-    @Override
     public void run() {
         while (true){
 

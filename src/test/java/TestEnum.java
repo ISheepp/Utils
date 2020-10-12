@@ -21,6 +21,6 @@ public class TestEnum {
 
     @Test
     public void test(){
-
+        
     }
 }
