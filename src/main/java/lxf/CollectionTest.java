@@ -1,6 +1,7 @@
 package lxf;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -14,10 +15,21 @@ public class CollectionTest {
         list.add("1");
         list.add("2");
         list.add("3");
-        list.remove("3");
-        for (String s : list) {
+        Iterator<String> iterator = list.iterator();
+        for (Iterator<String> it = list.iterator(); it.hasNext(); ) {
+            String s = it.next();
             System.out.println(s);
         }
+        System.out.println("====================");
+        //
+        while (iterator.hasNext()) {
+            String s = iterator.next();
+            System.out.println(s);
+        }
+
+        boolean contains = list.contains("2");
+        System.out.println(contains);
+
     }
 
 }
