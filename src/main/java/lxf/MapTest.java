@@ -13,10 +13,14 @@ public class MapTest {
         map.put(1, "lzy");
         map.put(3, "lzy3");
         map.put(2, "lzy2");
+
+
         for (Integer key : map.keySet()) {
             String value = map.get(key);
             System.out.println(key + "=" + value);
         }
+
+        System.out.println("============================");
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             Integer key = entry.getKey();
             String value = entry.getValue();
