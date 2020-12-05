@@ -21,9 +21,6 @@ public class Reflection extends Object {
         System.out.println(c1.hashCode());
         System.out.println(c2.hashCode());
 
-
-
-
     }
 
 
