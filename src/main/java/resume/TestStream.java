@@ -43,7 +43,7 @@ public class TestStream {
         list.add("7");
         list.add("8");
         list.add("9");
-        list.forEach(System.out::println);
+        System.out.println(list.stream().count());
         System.out.println(list.stream().filter(s -> s.equals("1")).count());
     }
 
@@ -64,6 +64,34 @@ public class TestStream {
         // 使用map()把一组String转换为LocalDate并打印。
         Stream<String> stringStream = Arrays.stream(new String[]{"2020-04-01","2020-04-02","2020-04-03","2020-04-04"});
         stringStream.map(LocalDate::parse).forEach(System.out::println);
+    }
+
+    /**
+     * 测试foreach
+     */
+    @Test
+    public void testForEach(){
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("1");
+        list.add("5");
+        list.add("6");
+        list.add("7");
+        list.add("8");
+        list.add("9");
+        list.forEach((s)->{
+            if (s.equals("1")) {
+                s.replace("1", "11");
+            }
+        });
+        // for (int i = 0; i < list.size(); i++) {
+        //     if (s.equals("1")) {
+        //         s.replace("1", "11");
+        //     }
+        // }
+        list.forEach(System.out::println);
     }
 
 }
