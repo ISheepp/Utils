@@ -76,9 +76,11 @@ public class TestYjh {
         list.add("4");
         list.add("5");
         List<Integer> asList = Arrays.asList(1, 3, 4, 2, 5, 6, 7, 8);
-        System.out.println(asList.stream().reduce(Integer::sum).get());
+        // System.out.println(asList.stream().reduce(Integer::sum).get());
         //所有数乘积的两倍
-        System.out.println(asList.stream().reduce(2, (a, b) -> (a * b)));
+        // System.out.println(asList.stream().reduce(2, (a, b) -> (a * b)));
+        List<Integer> collect = list.stream().map((Integer::parseInt)).collect(Collectors.toList());
+        collect.forEach(System.out::println);
 
     }
 
