@@ -24,6 +24,5 @@ public class TestThread1 extends Thread {
         //调用start()方法开启线程
         TestThread1 testThread1 = new TestThread1();
         testThread1.start();
-
     }
 }

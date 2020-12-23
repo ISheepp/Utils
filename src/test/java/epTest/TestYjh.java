@@ -4,8 +4,11 @@ import org.junit.Test;
 import resume.Person;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author linzy
@@ -83,5 +86,103 @@ public class TestYjh {
         collect.forEach(System.out::println);
 
     }
+
+    @Test
+    public void testThreadArray(){
+        System.out.println("testArray start....");
+        Runnable runnable = () -> {
+            System.out.println("run!!");
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("hhhhhh!!");
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("testArray end!!");
+
+    }
+
+    @Test
+    // 找到接下来30天的周末
+    public void testForFilter() {
+
+        Stream.generate(new DateSupplier())
+                .limit(31)
+                .filter(d -> d.getDayOfWeek() == DayOfWeek.SATURDAY || d.getDayOfWeek() == DayOfWeek.SUNDAY)
+                .forEach(System.out::println);
+
+
+
+    }
+
+    static class DateSupplier implements Supplier<LocalDate> {
+
+        LocalDate start = LocalDate.now();
+        int n = -1;
+
+        @Override
+        public LocalDate get() {
+            n++;
+            return start.plusDays(n);
+        }
+    }
+
+    @Test
+    public void testForMapAndReduce(){
+        List<String> list = new ArrayList<>();
+        list.add("name=lzy");
+        list.add("debug=true");
+        list.add("help=false");
+        // 把k=v转换为Map[k]=v
+        Stream<String[]> stream = list.stream().map(kv -> {
+            String[] ss = kv.split("\\=", 2);
+            for (String s : ss) {
+                System.out.println(s);
+            }
+            return ss;
+        });
+        stream.forEach(System.out::println);
+    }
+
+    @Test
+    public void test1(){
+        String s = "name=lzy=qwewer=werwer";
+        // 会切割两次
+        String[] split = s.split("\\=", 3);
+        System.out.println(Arrays.toString(split));
+    }
+
+    @Test
+    public void testForToArray(){
+        List<String> list = new ArrayList<>();
+        list.add("lzy");
+        list.add("qwe");
+        list.add("rty");
+        String[] strings = list.stream().toArray(String[]::new);
+        for (String string : strings) {
+            System.out.println(string);
+        }
+    }
+
+    @Test
+    public void testForToMap(){
+        Stream<String> stream = Stream.of("APPL:Apple", "MSFT:Microsoft");
+        Map<String, String> map = stream
+                .collect(Collectors.toMap(
+                        // 把元素s映射为key:
+                        s -> s.substring(0, s.indexOf(':')),
+                        // 把元素s映射为value:
+                        s -> s.substring(s.indexOf(':') + 1)));
+        System.out.println(map);
+    }
+
 
 }
