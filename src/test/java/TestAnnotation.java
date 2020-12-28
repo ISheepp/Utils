@@ -23,7 +23,7 @@ public class TestAnnotation {
         for (Field f : c.getDeclaredFields()) {
             if (f.isAnnotationPresent(MyTest.class)) {
                 MyTest annotation = f.getAnnotation(MyTest.class);
-                System.out.println("字段：[" + f.getName() + "]，描述:[" + annotation.description() + annotation.length());
+                System.out.println("字段：[" + f.getName() + "]，描述:[" + annotation.description() + annotation.length() + "]");
             }
         }
     }
