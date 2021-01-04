@@ -1,7 +1,12 @@
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import entity.Student;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -43,6 +48,34 @@ public class IsheepTests {
         if (date1.getTime() - date.getTime() > 200) {
             System.out.println("sss");
         }
+    }
+
+    @Test
+    public void testForArray(){
+        Integer[] ns = {11, 2, 32, 44, 5, 8, 13};
+        // 正序排序
+        Arrays.sort(ns);
+        System.out.println(Arrays.toString(ns));
+        // 降序
+        Arrays.sort(ns, Collections.reverseOrder());
+        System.out.println(Arrays.toString(ns));
+
+    }
+
+    @Test
+    public void testStu(){
+        Student student = new Student();
+        student.setName("yyy");
+        System.out.println(JSON.toJSONString(student,
+                SerializerFeature.PrettyFormat,
+                SerializerFeature.UseSingleQuotes));
+    }
+
+    @Test
+    public void testMethod(){
+        String s = "  sadasd ";
+        System.out.println(s.trim());
+        System.out.println(s);
     }
 
 }
