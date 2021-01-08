@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author ISheep
@@ -76,6 +79,34 @@ public class IsheepTests {
         String s = "  sadasd ";
         System.out.println(s.trim());
         System.out.println(s);
+    }
+
+    @Test
+    public void testSplit(){
+        String badstr = "exec | and |execute |insert |select |delete |update |count(|drop |master |truncate |"
+                + "char |declare |sitename |net user |xp_cmdshell |like'|create |"
+                + " table|from|grant | use |group_concat(|column_name |"
+                + "information_schema.columns|table_schema |union |where |"
+                + " or |like |(+)|--";// 过滤掉的sql关键字，可以手动添加
+        String[] split = badstr.split("\\|");
+        for (String s : split) {
+            System.out.println(s);
+        }
+    }
+    
+    @Test
+    public void testForExecutor(){
+
+        ExecutorService service = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            service.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("test!!!");
+                }
+            });
+        }
+        service.shutdown();
     }
 
 }
