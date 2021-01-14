@@ -108,5 +108,12 @@ public class IsheepTests {
         }
         service.shutdown();
     }
+    
+    @Test
+    public void testString(){
+        String s = "test String methods";
+        int i = s.indexOf("String");
+        System.out.println(i);
+    }
 
 }
