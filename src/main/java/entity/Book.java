@@ -13,6 +13,22 @@ public class Book {
 
     private static Double price;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public static Double getPrice() {
+        return price;
+    }
+
+    public static void setPrice(Double price) {
+        Book.price = price;
+    }
+
     void testFoo() {
         Runnable r = new Runnable() {
             @Override

@@ -4,10 +4,9 @@ import entity.Student;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -114,6 +113,39 @@ public class IsheepTests {
         String s = "test String methods";
         int i = s.indexOf("String");
         System.out.println(i);
+    }
+    
+    @Test
+    public void testBigDecimal(){
+        BigDecimal bd = new BigDecimal("123.123");
+        BigDecimal bd2 = new BigDecimal("23.123");
+        BigDecimal[] bigDecimals = bd.divideAndRemainder(bd2);
+        System.err.println(bigDecimals[0]);
+        System.err.println(bigDecimals[1]);
+    }
+
+    @Test
+    public void testRandom(){
+        // 这是因为我们创建Random实例时，如果不给定种子，就使用系统当前时间戳作为种子，因此每次运行时，种子不同，得到的伪随机数序列就不同。
+        Random random = new Random(12345);
+        System.out.println(random.nextInt());
+    }
+
+    @Test
+    public void testSecureRandom(){
+        SecureRandom random = null;
+        try {
+            random = SecureRandom.getInstanceStrong();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            random = new SecureRandom();
+        }
+        byte[] buffer = new byte[16];
+        random.nextBytes(buffer);
+        System.out.println(Arrays.toString(buffer));
+
+
+
     }
 
 }
