@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -7,8 +8,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author linzy
  * @create 2021-01-14 14:42:18
  */
-public class Book {
+public class Book implements Serializable {
 
+    private static final long serialVersionUID = 4466525875136663702L;
     private String name;
 
     private static Double price;

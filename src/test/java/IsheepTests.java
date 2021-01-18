@@ -144,8 +144,16 @@ public class IsheepTests {
         random.nextBytes(buffer);
         System.out.println(Arrays.toString(buffer));
 
-
-
     }
 
+    @Test
+
+
+    public static void main(String[] args) {
+        int num = -1;
+        if (num < 0) {
+            throw new IllegalArgumentException();
+        }
+        System.out.println(num);
+    }
 }
