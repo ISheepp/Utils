@@ -21,6 +21,8 @@ public class Student implements Serializable {
 
     private String name;
 
+    public String price;
+
     public Student() {
 
     }
