@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -16,6 +18,11 @@ import java.util.concurrent.Executors;
  * @create 2020/11/24 20:06
  */
 public class IsheepTests {
+
+    @Test
+    public void testTime(){
+        System.err.println(LocalDateTime.now());
+    }
 
     @Test
     public void test(){
@@ -145,9 +152,6 @@ public class IsheepTests {
         System.out.println(Arrays.toString(buffer));
 
     }
-
-    @Test
-
 
     public static void main(String[] args) {
         int num = -1;
