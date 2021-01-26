@@ -12,8 +12,6 @@ public class FastJsonTest {
 
     @Test
     public void test() {
-
-
         Person person = new Person("林子洋", 22, "male", 123);
         // Java对象直接转Json
         String s = JSON.toJSONString(person);
