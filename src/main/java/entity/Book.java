@@ -13,6 +13,7 @@ public class Book implements Serializable {
     private static final long serialVersionUID = 4466525875136663702L;
     private String name;
 
+    @SuppressWarnings("sss")
     private static Double price;
 
     public String getName() {

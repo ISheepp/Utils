@@ -1,7 +1,13 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import entity.BeanBook;
+import entity.BeanBook2;
 import entity.Student;
 import org.junit.Test;
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.Assert;
+import sun.security.util.AuthResources_it;
 
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
@@ -153,11 +159,88 @@ public class IsheepTests {
 
     }
 
-    public static void main(String[] args) {
-        int num = -1;
-        if (num < 0) {
-            throw new IllegalArgumentException();
+    @Test
+    public void testList(){
+        List<String> list = new ArrayList<>();
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        list.add("5");
+        System.out.println(list.indexOf("3"));
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
         }
-        System.out.println(num);
     }
+
+    // 找出缺失的数字
+    public static void main(String[] args) {
+        // 构造从start到end的序列：
+        final int start = 10;
+        final int end = 20;
+        List<Integer> list = new ArrayList<>();
+        for (int i = start; i <= end; i++) {
+            list.add(i);
+        }
+        // 随机删除List中的一个元素:
+        int removed = list.remove((int) (Math.random() * list.size()));
+        int found = findMissingNumber(start, end, list);
+        System.out.println(list.toString());
+        System.out.println("missing number: " + found);
+        System.out.println(removed == found ? "测试成功" : "测试失败");
+    }
+
+    static int findMissingNumber(int start, int end, List<Integer> list) {
+        // 如果没有该元素会返回-1
+        for (int i = start; i <= end; i++) {
+            if (list.indexOf(i) != -1)
+                continue;
+            else
+                return i;
+
+        }
+        return 0;
+    }
+
+    @Test
+    public void testMap(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", 2);
+        map.put("2", 3);
+        // 遍历map
+        // 1.
+        for (String s : map.keySet()) {
+            System.out.println("key= " + s + " and value= " + map.get(s));
+        }
+        System.out.println("================================");
+        // 2.
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            // K
+            String key = entry.getKey();
+            // V
+            Object value = entry.getValue();
+            System.out.println("K= " + key + " and V = " + value);
+        }
+        // 3. 性能不如entrySet
+        map.forEach((key, value) -> System.out.println("K= " + key + " and V = " + value));
+
+    }
+
+    @Test
+    public void testForBeanUtils(){
+        BeanBook one = new BeanBook();
+        BeanBook2 two = new BeanBook2();
+        one.setName1("lzy").setDescription("description").setPrice(23.2);
+        BeanUtils.copyProperties(one, two);
+
+        System.err.println(one);
+        System.err.println(two);
+    }
+
+    @Test
+    public void testAssert(){
+        String s = null;
+        Assert.notNull(s, "aaa");
+    }
+
 }
