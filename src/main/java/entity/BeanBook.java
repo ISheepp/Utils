@@ -17,4 +17,9 @@ public class BeanBook {
 
     private String description;
 
+    public static String test() {
+
+        return "sss";
+    }
+
 }

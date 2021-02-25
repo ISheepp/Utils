@@ -111,12 +111,7 @@ public class IsheepTests {
 
         ExecutorService service = Executors.newCachedThreadPool();
         for (int i = 0; i < 5; i++) {
-            service.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("test!!!");
-                }
-            });
+            service.execute(() -> System.out.println("test!!!"));
         }
         service.shutdown();
     }
@@ -239,8 +234,23 @@ public class IsheepTests {
 
     @Test
     public void testAssert(){
-        String s = null;
-        Assert.notNull(s, "aaa");
+        List<String> list = new ArrayList<>();
+        list.add("bsd");
+        list.add("asd");
+        Collections.sort(list, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return 0;
+            }
+        });
+        Collections.sort(list, (s1, s2) -> s1.compareTo(s2));
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    public void test111(){
+        List<String> list = Arrays.asList("lzy", "123", "asd");
+
     }
 
 }

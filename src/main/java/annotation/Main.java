@@ -2,7 +2,6 @@ package annotation;
 
 import org.junit.Test;
 
-import java.lang.reflect.Method;
 import java.util.*;
 
 /**
