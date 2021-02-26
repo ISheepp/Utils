@@ -12,6 +12,8 @@ import sun.security.util.AuthResources_it;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -248,9 +250,10 @@ public class IsheepTests {
     }
 
     @Test
-    public void test111(){
-        List<String> list = Arrays.asList("lzy", "123", "asd");
-
+    public void test111() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(sdf.format(new Date()));
+        System.out.println(sdf.parse("2020-12-12"));
     }
 
 }
