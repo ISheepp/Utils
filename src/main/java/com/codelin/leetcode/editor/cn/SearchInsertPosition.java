@@ -31,11 +31,6 @@
   
 package com.codelin.leetcode.editor.cn;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
 public class SearchInsertPosition{
     public static void main(String[] args) {
         Solution solution = new SearchInsertPosition().new Solution();
@@ -47,20 +42,23 @@ public class SearchInsertPosition{
    //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int searchInsert(int[] nums, int target) {
-        int n = nums.length;
-        int left = 0;
-        int right = n - 1;
-        int ans = n;
-        while (left <= right) {
-            int mid = ((right - left) / 2) + left;
-            if (nums[mid] >= target) {
-                ans = mid;
-                right = mid - 1;
-            } else {
+        int len = nums.length;
+        if (len == 0) {
+            return 0;
+        }
+        if (nums[len - 1] < target) {
+            return len;
+        }
+        int left = 0, right = len - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
                 left = mid + 1;
+            } else {
+                right = mid;
             }
         }
-        return ans;
+        return left;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)

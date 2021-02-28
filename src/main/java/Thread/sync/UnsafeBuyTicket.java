@@ -42,7 +42,7 @@ class BuyTicket implements Runnable{
             return;
         }
         //模拟延时
-        Thread.sleep(1000);
+        Thread.sleep(100);
         //买票
         System.out.println(Thread.currentThread().getName() + "拿到" + ticketNums--);
 
