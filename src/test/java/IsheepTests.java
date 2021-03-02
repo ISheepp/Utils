@@ -1,6 +1,8 @@
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import entity.Apple;
 import entity.BeanBook;
 import entity.BeanBook2;
 import entity.Student;
@@ -20,6 +22,7 @@ import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * @author ISheep
@@ -258,6 +261,58 @@ public class IsheepTests {
 
     @Test
     public void testL(){
+        Apple apple1 =  new Apple(1,"苹果1",new BigDecimal("3.25"),10);
+        Apple apple12 = new Apple(1,"苹果2",new BigDecimal("1.35"),20);
+        Apple apple123 = new Apple(1,"苹果2",new BigDecimal("3.1235"),220);
+        Apple apple2 =  new Apple(2,"香蕉",new BigDecimal("2.89"),30);
+        Apple apple3 =  new Apple(3,"荔枝",new BigDecimal("9.99"),40);
+
+        List<Apple> list = new ArrayList<>();
+        list.add(apple1);
+        list.add(apple12);
+        list.add(apple123);
+        list.add(apple2);
+        list.add(apple3);
+
+        // 1、List以Id分组，Map<Integer, List<Apple>
+        Map<Integer, List<Apple>> map = list.stream().collect(Collectors.groupingBy(Apple::getId));
+        // System.err.println("map = " + map);
+
+        // 2、List转Map
+        Map<Integer, Apple> collect = list.stream().collect(Collectors.toMap(Apple::getId, a -> a, (k1, k2) -> k1));
+        System.out.println("collect = " + collect);
+
+    }
+
+    @Test
+    public void testSubList(){
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("12");
+        list.add("123");
+        list.add("1234");
+        List<String> list1 = list.subList(0, 2);
+        list.add("1111");
+        list1.forEach(System.out::println);
+    }
+
+    @Test
+    public void testDequeue(){
+        String json = "{\n" +
+                "    \"FUNTYPE\": [],\n" +
+                "    \"NODETYPE\": [],\n" +
+                "    \"ISLOG\": [],\n" +
+                "    \"AAE100\": [],\n" +
+                "    \"AUFLAG\": [],\n" +
+                "    \"RBFLAG\": [],\n" +
+                "    \"SLEVEL\": [],\n" +
+                "    \"SYSTEM\": [],\n" +
+                "    \"SYSTEM\": []\n" +
+                "}";
+        // System.out.println(json);
+
+        JSONObject jsonObject = JSONObject.parseObject(json);
+        Set<String> strings = jsonObject.keySet();
     }
 
 }
