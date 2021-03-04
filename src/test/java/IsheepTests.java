@@ -9,6 +9,7 @@ import entity.Student;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import sun.security.util.AuthResources_it;
 
 import java.math.BigDecimal;
@@ -314,5 +315,39 @@ public class IsheepTests {
         JSONObject jsonObject = JSONObject.parseObject(json);
         Set<String> strings = jsonObject.keySet();
     }
+
+    /**
+     * 手机号脱敏
+     */
+    @Test
+    public void testTM(){
+        String phone = "508e6697b94f8ed4";
+        System.out.println(desensitizedPhoneNumber(phone));
+    }
+    private static String desensitizedPhoneNumber(String secureKey){
+        if(!StringUtils.isEmpty(secureKey)){
+            secureKey = secureKey.replaceAll("(\\w{3})\\w*(\\w{4})", "$1*********$2");
+        }
+        return secureKey;
+    }
+
+    @Test
+    public void testCompare(){
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.sort(Comparator.naturalOrder());
+    }
+
+    @Test
+    public void testHashMap(){
+        int[] array = new int[4];
+        double[] array2 = new double[2];
+        System.out.println(array2.getClass());
+        System.out.println(array.getClass());
+    }
+
+
 
 }

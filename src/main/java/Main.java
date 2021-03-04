@@ -1,24 +1,37 @@
 
-import java.util.Arrays;
-
 /**
  * @author lin
  * @create 2020-09-30 14:31
  */
 public class Main {
     public static void main(String[] args) {
-        
+        new Square(4);
     }
 }
 
-class Score {
-    private int[] scores;
-    public Score(int[] scores) {
-        // this.scores = Arrays.copyOf(scores, scores.length);
-        this.scores = scores;
+class Polygon {
+    void cal() {
+        System.out.println("polygon.call()");
     }
 
-    public void printScores() {
-        System.out.println(Arrays.toString(scores));
+    Polygon() {
+        System.out.println("polygon before cal()");
+        cal();
+        System.out.println("polygon after cal()");
+    }
+
+}
+
+class Square extends Polygon {
+    private int border = 2;
+
+    Square(int i) {
+        border = i;
+        System.out.println("square.square()" + border);
+    }
+
+    @Override
+    void cal() {
+        System.out.println("square.cal()" + border);
     }
 }
