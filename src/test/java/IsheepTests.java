@@ -23,7 +23,9 @@ import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author ISheep
@@ -348,6 +350,73 @@ public class IsheepTests {
         System.out.println(array.getClass());
     }
 
+    @Test
+    public void testStream(){
+        Stream<String> stream = Stream.of("hello", "world", "helloworld");
+        List<String> list = stream.collect(Collectors.toCollection(ArrayList::new));
+    }
 
+    @Test
+    public void testNum(){
+        // Integer[] nums = new Integer[]{3, 2, 4};
+        // Integer sum = Stream.of(nums).reduce(1, (n1, n2) -> n1 * n2);
+        // System.out.println(sum);
+
+        Integer[] nums = new Integer[]{1,2,3,4,5,6};
+        System.out.println(Stream.of(nums).filter(item -> item > 3)
+                .peek(item -> System.out.print(item + 1))
+                .peek(System.out::print)
+                .reduce(0, Integer::sum));
+    }
+
+    @Test
+    public void testX(){
+        Integer x = 2;
+        Integer integer = Integer.valueOf(2); // 装箱
+        int y = x.intValue(); // 拆箱
+        System.out.println(Objects.equals(null, "null"));
+        BigDecimal bigDecimal = new BigDecimal("1.0");
+    }
+
+    @Test
+    public void testlzy(){
+        Integer[] myArray = {1, 2, 3};
+        List<Integer> collect = Arrays.stream(myArray).collect(Collectors.toList());
+        int[] array = {1, 2, 3};
+        Arrays.stream(array).boxed().collect(Collectors.toList());
+        System.out.println(array.length);
+        Collections.sort(collect, Integer::compareTo);
+    }
+
+    @Test
+    public void test555(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", null);
+        map.put(null, 1235);
+        map.put(null, 123656);
+        map.forEach((k,v) -> System.out.println(k + "===" + v));
+        int a = '2';
+        System.out.println(a);
+    }
+
+    @Test
+    public void testPl(){
+        int[] array = {3, 5, 2, 4, 7};
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = 0; j < array.length - 1 - i; j++) {
+                if (array[j + 1] < array[j]) {
+                    // int tem = array[j];
+                    // array[j] = array[j + 1];
+                    // array[j + 1] = tem;
+                    array[j + 1] = array[j] - array[j + 1];
+                    array[j] = array[j] - array[j + 1];
+                    array[j + 1] = array[j + 1] + array[j];
+                }
+            }
+        }
+        System.out.println(Arrays.toString(array));
+        int[] ints = Arrays.copyOf(array, 2);
+        System.out.println(Arrays.toString(ints));
+    }
 
 }
