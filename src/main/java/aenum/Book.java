@@ -6,6 +6,8 @@ package aenum;
  */
 public class Book {
 
+    private String name;
+
     protected Number b() {
         return null;
     }

@@ -25,6 +25,7 @@ public class QuickSort {
     }
 
     private int partition(int[] arr, int left, int right) {
+        // TODO: 将 arr 从 left 到 right 分区，左边区域比基数小，右边区域比基数大，然后返回中间值的下标
         // 设定基准值（pivot）
         int pivot = left;
         int index = pivot + 1;
@@ -45,7 +46,7 @@ public class QuickSort {
     }
 
     public static void main(String[] args) throws Exception {
-        int[] nums = {3, 2, 1, 5, 7, 6, 23, 21, 12, 32};
+        int[] nums = {3, 2, 1, 5, 7, 6, 23, 1, 21, 12, 32};
         int[] sort = new QuickSort().sort(nums);
         System.out.println(Arrays.toString(sort));
     }

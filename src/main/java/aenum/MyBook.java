@@ -6,6 +6,10 @@ package aenum;
  */
 public class MyBook extends Book {
 
+    public MyBook() {
+        super();
+    }
+
     @Override
     public Integer b() {
         long test = 012;
@@ -16,4 +20,11 @@ public class MyBook extends Book {
 
         return null;
     }
+
+    public static void main(String[] args) {
+        MyBook myBook = new MyBook();
+        Object o = new Object();
+        int i = o.hashCode();
+    }
+
 }

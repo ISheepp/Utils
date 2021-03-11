@@ -12,6 +12,9 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import sun.security.util.AuthResources_it;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -23,6 +26,7 @@ import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -418,5 +422,89 @@ public class IsheepTests {
         int[] ints = Arrays.copyOf(array, 2);
         System.out.println(Arrays.toString(ints));
     }
+
+    @Test
+    public void test22(){
+        int i = 2;
+
+        switch (i){
+            case 1:
+                i++;
+            case 2:
+                i++;
+            case 3:
+                i++;
+            default:
+                System.out.println("hhh");
+            case 4:
+                i++;
+        }
+
+        System.out.println(i);
+    }
+
+    /**
+     * 跳出多重循环
+     */
+    @Test
+    public void test1555() throws InterruptedException {
+        ok:
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                System.out.println(j);
+                if (j == 5) {
+                    break ok;
+                }
+            }
+        }
+        Thread.sleep(5);
+    }
+
+    /**
+     * 这段代码在jdk1.6中运行，会得到两个false，而在jdk1.7中运行会得到一个true一个false。产生差异的原因是：在jdk1.6中，intern()
+     * 方法会把首次遇到的字符串实例复制到永久代中，返回的也是永久代中这个字符串实例的引用，而用StringBuilder创建的字符串实例在Java堆上，所以必然不是同一个引用，将返回false。而jdk1.7中的intern
+     * ()实现不会再复制实例，只是在常量池中记录首次出现的实例引用，因此intern()
+     * 返回的引用和由StringBuilder创建的那个字符串实例是同一个。对比str2返回false是因为“java”这个字符串在执行StringBuilder.toString()
+     * 之前已经出现过，字符串常量池中已经有它的引用了，不符合首次出现的原则，而“good”这个字符串则是首次出现的，因此返回true。
+     * 现在的疑问是“java”这个字符串在常量池中什么时候存在了？
+     * 我最开始的猜想是“java”这个字符串是不是常驻在常量池中的？那为什么常驻在常量池中呢？Java虚拟机什么时候加载了“java”这个字符串？
+     * 答：java虚拟机会自动调用System类，代码如下：
+     * ————————————————
+     */
+    @Test
+    public void test1111(){
+        String s1 = new StringBuilder("go").append("od").toString();
+        System.out.println(s1.intern() == s1);
+        String s2 = new StringBuilder("ja").append("va").toString();
+        System.out.println(s2.intern() == s2);
+    }
+
+    @Test
+    public void testjisuan(){
+        // 左移3位相当于乘以2的3次方，右移3位相当于除以2的3次方
+        System.out.println(3 << 3);
+    }
+
+    @Test
+    public void test123(){
+        String a = new String("lzy");
+        // String b = a.intern();
+        // System.out.println(b);
+        //
+        // StringBuilder s = new StringBuilder("1223");
+        // System.out.println(s.reverse());
+        System.out.println(a.substring(1));
+        Set<String> set = new HashSet<>();
+        set.add("1");
+
+    }
+
+    @Test
+    public void testA(){
+        List<String> list = new ArrayList<>();
+        list.sort((o1, o2) -> Integer.parseInt(o1.length() > o2.length() ? o1 : o2));
+        Map<String, List> map = new HashMap<>();
+    }
+
 
 }

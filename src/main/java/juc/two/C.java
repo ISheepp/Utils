@@ -7,6 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author linzy
  * @create 2021-03-02 20:09:35
+ * 循环打印ABC ABC....
  * A执行完调用B,B执行完调用C，C执行完调用A
  */
 public class C {
@@ -37,7 +38,7 @@ public class C {
 //资源类
 class Data3 {
 
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
     Condition condition1 = lock.newCondition();
     Condition condition2 = lock.newCondition();
     Condition condition3 = lock.newCondition();
@@ -52,7 +53,8 @@ class Data3 {
                 // 等待
                 condition1.await();
             }
-            System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            // System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            System.out.println("A");
             // 唤醒指定B
             // condition1.signalAll();// 通知全部
             number = 2;
@@ -73,7 +75,8 @@ class Data3 {
                 // 等待
                 condition2.await();
             }
-            System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            // System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            System.out.println("B");
             // 唤醒指定B
             // condition1.signalAll();// 通知全部
             number = 3;
@@ -93,7 +96,8 @@ class Data3 {
                 // 等待
                 condition3.await();
             }
-            System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            // System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            System.out.println("C");
             // 唤醒指定B
             // condition1.signalAll();// 通知全部
             number = 1;
