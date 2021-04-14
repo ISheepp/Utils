@@ -75,7 +75,7 @@ class Data3 {
                 // 等待
                 condition2.await();
             }
-            // System.out.println(Thread.currentThread().getName() + "=>AAAAAA");
+            // System.out.println(Thread.currentThread().getName() + " => AAAAAA");
             System.out.println("B");
             // 唤醒指定B
             // condition1.signalAll();// 通知全部

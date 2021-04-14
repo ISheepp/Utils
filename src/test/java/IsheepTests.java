@@ -2,9 +2,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.fasterxml.jackson.databind.util.LRUMap;
 import entity.Apple;
 import entity.BeanBook;
 import entity.BeanBook2;
+import entity.Person;
 import entity.Student;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
@@ -12,9 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import sun.security.util.AuthResources_it;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -27,6 +27,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,12 +41,12 @@ import java.util.stream.Stream;
 public class IsheepTests {
 
     @Test
-    public void testTime(){
+    public void testTime() {
         System.err.println(LocalDateTime.now());
     }
 
     @Test
-    public void test(){
+    public void test() {
         Integer i1 = 40;
         Integer i2 = 40;
         Integer i3 = 0;
@@ -59,7 +62,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testYM(){
+    public void testYM() {
         Calendar cal = Calendar.getInstance();
         System.out.println(cal.getTime());
         System.out.println(cal.get(Calendar.HOUR));
@@ -67,7 +70,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testOverTime(){
+    public void testOverTime() {
         // getTime()获取的是ms，也就是说要加000才能是秒
         Date date = new Date(1607149574042L);
         Date date1 = new Date(1607149574322L);
@@ -78,7 +81,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testForArray(){
+    public void testForArray() {
         Integer[] ns = {11, 2, 32, 44, 5, 8, 13};
         // 正序排序
         Arrays.sort(ns);
@@ -90,7 +93,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testStu(){
+    public void testStu() {
         Student student = new Student();
         student.setName("yyy");
         System.out.println(JSON.toJSONString(student,
@@ -99,14 +102,14 @@ public class IsheepTests {
     }
 
     @Test
-    public void testMethod(){
+    public void testMethod() {
         String s = "  sadasd ";
         System.out.println(s.trim());
         System.out.println(s);
     }
 
     @Test
-    public void testSplit(){
+    public void testSplit() {
         String badstr = "exec | and |execute |insert |select |delete |update |count(|drop |master |truncate |"
                 + "char |declare |sitename |net user |xp_cmdshell |like'|create |"
                 + " table|from|grant | use |group_concat(|column_name |"
@@ -117,9 +120,9 @@ public class IsheepTests {
             System.out.println(s);
         }
     }
-    
+
     @Test
-    public void testForExecutor(){
+    public void testForExecutor() {
 
         ExecutorService service = Executors.newCachedThreadPool();
         for (int i = 0; i < 5; i++) {
@@ -127,16 +130,16 @@ public class IsheepTests {
         }
         service.shutdown();
     }
-    
+
     @Test
-    public void testString(){
+    public void testString() {
         String s = "test String methods";
         int i = s.indexOf("String");
         System.out.println(i);
     }
-    
+
     @Test
-    public void testBigDecimal(){
+    public void testBigDecimal() {
         BigDecimal bd = new BigDecimal("123.123");
         BigDecimal bd2 = new BigDecimal("23.123");
         BigDecimal[] bigDecimals = bd.divideAndRemainder(bd2);
@@ -145,14 +148,14 @@ public class IsheepTests {
     }
 
     @Test
-    public void testRandom(){
+    public void testRandom() {
         // 这是因为我们创建Random实例时，如果不给定种子，就使用系统当前时间戳作为种子，因此每次运行时，种子不同，得到的伪随机数序列就不同。
         Random random = new Random(12345);
         System.out.println(random.nextInt());
     }
 
     @Test
-    public void testSecureRandom(){
+    public void testSecureRandom() {
         SecureRandom random = null;
         try {
             random = SecureRandom.getInstanceStrong();
@@ -167,7 +170,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testList(){
+    public void testList() {
         List<String> list = new ArrayList<>();
         list.add("2");
         list.add("3");
@@ -210,7 +213,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testMap(){
+    public void testMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("1", 2);
         map.put("2", 3);
@@ -234,7 +237,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testForBeanUtils(){
+    public void testForBeanUtils() {
         BeanBook one = new BeanBook();
         BeanBook2 two = new BeanBook2();
         one.setName1("lzy").setDescription("description").setPrice(23.2);
@@ -245,7 +248,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testAssert(){
+    public void testAssert() {
         List<String> list = new ArrayList<>();
         list.add("bsd");
         list.add("asd");
@@ -267,12 +270,12 @@ public class IsheepTests {
     }
 
     @Test
-    public void testL(){
-        Apple apple1 =  new Apple(1,"苹果1",new BigDecimal("3.25"),10);
-        Apple apple12 = new Apple(1,"苹果2",new BigDecimal("1.35"),20);
-        Apple apple123 = new Apple(1,"苹果2",new BigDecimal("3.1235"),220);
-        Apple apple2 =  new Apple(2,"香蕉",new BigDecimal("2.89"),30);
-        Apple apple3 =  new Apple(3,"荔枝",new BigDecimal("9.99"),40);
+    public void testL() {
+        Apple apple1 = new Apple(1, "苹果1", new BigDecimal("3.25"), 10);
+        Apple apple12 = new Apple(1, "苹果2", new BigDecimal("1.35"), 20);
+        Apple apple123 = new Apple(1, "苹果2", new BigDecimal("3.1235"), 220);
+        Apple apple2 = new Apple(2, "香蕉", new BigDecimal("2.89"), 30);
+        Apple apple3 = new Apple(3, "荔枝", new BigDecimal("9.99"), 40);
 
         List<Apple> list = new ArrayList<>();
         list.add(apple1);
@@ -292,7 +295,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testSubList(){
+    public void testSubList() {
         List<String> list = new ArrayList<>();
         list.add("1");
         list.add("12");
@@ -304,7 +307,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testDequeue(){
+    public void testDequeue() {
         String json = "{\n" +
                 "    \"FUNTYPE\": [],\n" +
                 "    \"NODETYPE\": [],\n" +
@@ -326,19 +329,20 @@ public class IsheepTests {
      * 手机号脱敏
      */
     @Test
-    public void testTM(){
+    public void testTM() {
         String phone = "508e6697b94f8ed4";
         System.out.println(desensitizedPhoneNumber(phone));
     }
-    private static String desensitizedPhoneNumber(String secureKey){
-        if(!StringUtils.isEmpty(secureKey)){
+
+    private static String desensitizedPhoneNumber(String secureKey) {
+        if (!StringUtils.isEmpty(secureKey)) {
             secureKey = secureKey.replaceAll("(\\w{3})\\w*(\\w{4})", "$1*********$2");
         }
         return secureKey;
     }
 
     @Test
-    public void testCompare(){
+    public void testCompare() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
@@ -347,7 +351,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testHashMap(){
+    public void testHashMap() {
         int[] array = new int[4];
         double[] array2 = new double[2];
         System.out.println(array2.getClass());
@@ -355,18 +359,18 @@ public class IsheepTests {
     }
 
     @Test
-    public void testStream(){
+    public void testStream() {
         Stream<String> stream = Stream.of("hello", "world", "helloworld");
         List<String> list = stream.collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Test
-    public void testNum(){
+    public void testNum() {
         // Integer[] nums = new Integer[]{3, 2, 4};
         // Integer sum = Stream.of(nums).reduce(1, (n1, n2) -> n1 * n2);
         // System.out.println(sum);
 
-        Integer[] nums = new Integer[]{1,2,3,4,5,6};
+        Integer[] nums = new Integer[]{1, 2, 3, 4, 5, 6};
         System.out.println(Stream.of(nums).filter(item -> item > 3)
                 .peek(item -> System.out.print(item + 1))
                 .peek(System.out::print)
@@ -374,7 +378,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testX(){
+    public void testX() {
         Integer x = 2;
         Integer integer = Integer.valueOf(2); // 装箱
         int y = x.intValue(); // 拆箱
@@ -383,7 +387,7 @@ public class IsheepTests {
     }
 
     @Test
-    public void testlzy(){
+    public void testlzy() {
         Integer[] myArray = {1, 2, 3};
         List<Integer> collect = Arrays.stream(myArray).collect(Collectors.toList());
         int[] array = {1, 2, 3};
@@ -393,18 +397,18 @@ public class IsheepTests {
     }
 
     @Test
-    public void test555(){
+    public void test555() {
         Map<String, Object> map = new HashMap<>();
         map.put("1", null);
         map.put(null, 1235);
         map.put(null, 123656);
-        map.forEach((k,v) -> System.out.println(k + "===" + v));
+        map.forEach((k, v) -> System.out.println(k + "===" + v));
         int a = '2';
         System.out.println(a);
     }
 
     @Test
-    public void testPl(){
+    public void testPl() {
         int[] array = {3, 5, 2, 4, 7};
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = 0; j < array.length - 1 - i; j++) {
@@ -424,10 +428,10 @@ public class IsheepTests {
     }
 
     @Test
-    public void test22(){
+    public void test22() {
         int i = 2;
 
-        switch (i){
+        switch (i) {
             case 1:
                 i++;
             case 2:
@@ -472,7 +476,7 @@ public class IsheepTests {
      * ————————————————
      */
     @Test
-    public void test1111(){
+    public void test1111() {
         String s1 = new StringBuilder("go").append("od").toString();
         System.out.println(s1.intern() == s1);
         String s2 = new StringBuilder("ja").append("va").toString();
@@ -480,13 +484,13 @@ public class IsheepTests {
     }
 
     @Test
-    public void testjisuan(){
+    public void testjisuan() {
         // 左移3位相当于乘以2的3次方，右移3位相当于除以2的3次方
         System.out.println(3 << 3);
     }
 
     @Test
-    public void test123(){
+    public void test123() {
         String a = new String("lzy");
         // String b = a.intern();
         // System.out.println(b);
@@ -500,11 +504,92 @@ public class IsheepTests {
     }
 
     @Test
-    public void testA(){
+    public void testA() {
         List<String> list = new ArrayList<>();
         list.sort((o1, o2) -> Integer.parseInt(o1.length() > o2.length() ? o1 : o2));
         Map<String, List> map = new HashMap<>();
     }
 
+    @Test
+    public void test1111111() {
+        StringBuffer abc = new StringBuffer("abc");
+        StringBuffer abc1 = new StringBuffer("abc");
+        System.out.println(abc.equals(abc1));
 
+        StringBuilder builder = new StringBuilder("123");
+        StringBuilder builder1 = new StringBuilder("123");
+        System.out.println(builder.equals(builder1));
+    }
+
+    @Test
+    public void testlzyi() throws IllegalAccessException, InstantiationException, NoSuchMethodException,
+            InvocationTargetException {
+        Class<Person> aClass = Person.class;
+        Person person = aClass.newInstance();
+        Class<? extends Person> aClass1 = person.getClass();
+        Constructor<Person> constructor = aClass.getConstructor();
+
+        constructor.setAccessible(true);
+        Person person1 = constructor.newInstance(Person.class);
+    }
+
+    @Test
+    public void testzifuchuan() {
+        String s = "asdfg";
+        int length = s.length();
+        String reverse = "";
+        for (int i = 0; i < length; i++) {
+            reverse = s.charAt(i) + reverse;
+        }
+        System.out.println(reverse);
+    }
+
+    @Test
+    public void testllll() {
+        // System.out.println(Runtime.getRuntime().availableProcessors());
+        int n = 123;
+        int m = 0, a = 1;
+        for (int i = 9; i > 1; i--) {
+            if (n % i == 0) {
+                m = m + i * a;
+                n /= i;
+                i = 10;
+                a *= 10;
+            }
+        }
+        if (n != 1) {
+        }
+        System.out.println(m);
+        Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
+
+    }
+
+    @Test
+    public void testadd() {
+        String name = "name";
+        System.out.println(String.class.isInstance(name));
+
+    }
+
+    /**
+     * 测试List固定大小并且已满的情况
+     * 会扩容
+     */
+    @Test
+    public void testListFull() throws NoSuchFieldException, IllegalAccessException {
+        List<String> list = new ArrayList<>(5);
+        for (int i = 0; i < 6; i++) {
+            list.add("data" + i);
+        }
+        //可以在这里的构造函数来进行ArrayList初始容量的设定
+        Class<? extends List> strClass = list.getClass();
+        Field field = strClass.getDeclaredField("elementData");
+        field.setAccessible(true);
+        Object[] elementData = (Object[]) field.get(list);
+        System.out.println("这个ArrayList的容量为："+elementData.length+
+                ",这个ArrayList中元素的个数为"+list.size());
+        // 扩容了1.5倍
+        list.forEach(System.out::println);
+    }
 }
