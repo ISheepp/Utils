@@ -1,4 +1,5 @@
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(builderMethodName = "builder")
 public class Person {
 
     private String name;
@@ -19,5 +21,7 @@ public class Person {
     private Integer age;
 
     private String sex;
+
+    private Integer face;
 
 }

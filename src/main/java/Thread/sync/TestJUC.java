@@ -18,7 +18,7 @@ public class TestJUC {
             }).start();
         }
 
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         System.out.println(list.size());
 
     }

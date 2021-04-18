@@ -12,7 +12,7 @@ public class Test {
     public void jacksonTest() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
 
-        Person person = new Person("林子洋", 22, "male");
+        Person person = new Person("林子洋", 22, "male",22);
 
         String s = mapper.writeValueAsString(person);
         System.out.println(s);
@@ -25,9 +25,9 @@ public class Test {
 
         List<Person> list = new ArrayList<Person>();
 
-        Person person = new Person("林子洋", 22, "male");
-        Person person2 = new Person("林子洋2", 21, "male2");
-        Person person3 = new Person("林子洋3", 21, "male3");
+        Person person = new Person("林子洋", 22, "male",22);
+        Person person2 = new Person("林子洋2", 21, "male2",22);
+        Person person3 = new Person("林子洋3", 21, "male3",22);
 
         list.add(person);
         list.add(person2);
@@ -47,7 +47,7 @@ public class Test {
 
     @org.junit.Test
     public void test2(){
-        Person person = new Person("lzy", 22, "男");
+        Person person = new Person("lzy", 22, "男",33);
         System.out.println(person.toString());
     }
 

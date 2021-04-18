@@ -20,15 +20,14 @@ public class TestLock {
 
 }
 
-class  TestLock2 implements Runnable{
+class TestLock2 implements Runnable{
 
     int ticketNums = 10;
 
-    private final ReentrantLock lock = new ReentrantLock();  //可重用锁
+    private final ReentrantLock lock = new ReentrantLock();  //可重入锁
 
     public void run() {
         while (true){
-
             try {
                 lock.lock(); //加锁
                 if (ticketNums > 0){
