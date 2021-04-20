@@ -592,4 +592,33 @@ public class IsheepTests {
         // 扩容了1.5倍
         list.forEach(System.out::println);
     }
+
+    /**
+     * subList硬核分页
+     */
+    @Test
+    public void testSubListPage(){
+        List<String> list = new ArrayList<>(5);
+        int start = 10;
+        int end = 66;
+        int fetchSize = (end - start) / 5;
+        for (int startT = start; startT < end; startT += fetchSize) {
+            int endT = startT + fetchSize;
+            System.out.println("查询范围为：" + startT + " ==> " + endT);
+            list.add("data" + startT);
+        }
+        System.out.println(list.size());
+    }
+
+    @Test
+    public void testLombok() throws Exception {
+        try {
+            System.out.println(2/0);
+        } catch (Exception e) {
+            // throw 异常报错
+            // throw new Exception("sss");
+            System.out.println("22");
+        }
+    }
+
 }
