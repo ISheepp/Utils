@@ -118,9 +118,6 @@ public class TestYjh {
                 .limit(31)
                 .filter(d -> d.getDayOfWeek() == DayOfWeek.SATURDAY || d.getDayOfWeek() == DayOfWeek.SUNDAY)
                 .forEach(System.out::println);
-
-
-
     }
 
     static class DateSupplier implements Supplier<LocalDate> {
