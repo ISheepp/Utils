@@ -621,4 +621,12 @@ public class IsheepTests {
         }
     }
 
+    @Test
+    public void testCompareTo(){
+        String s1 = "my";
+        String s2 = "qi";
+        int i = s1.compareTo(s2);
+        System.out.println(i);
+    }
+
 }

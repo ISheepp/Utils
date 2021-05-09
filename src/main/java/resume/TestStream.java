@@ -72,7 +72,7 @@ public class TestStream {
      */
     @Test
     public void testForEach(){
-        List<Person> list = new ArrayList<>();
+        /*List<Person> list = new ArrayList<>();
         Person one = new Person("lzy", "12");
         Person two = new Person("qwe", "13");
         Person three = new Person("asd", "14");
@@ -89,7 +89,7 @@ public class TestStream {
                 s.setAge("123");
             }
         });
-        list.forEach(System.out::println);
+        list.forEach(System.out::println);*/
     }
 
 }
