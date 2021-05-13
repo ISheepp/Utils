@@ -1,5 +1,6 @@
 package resume;
 
+import entity.Person;
 import org.junit.Test;
 
 import java.math.BigInteger;
@@ -71,27 +72,24 @@ public class TestStream {
      */
     @Test
     public void testForEach(){
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        list.add("3");
-        list.add("1");
-        list.add("5");
-        list.add("6");
-        list.add("7");
-        list.add("8");
-        list.add("9");
+        /*List<Person> list = new ArrayList<>();
+        Person one = new Person("lzy", "12");
+        Person two = new Person("qwe", "13");
+        Person three = new Person("asd", "14");
+        Person four = new Person("zxc", "15");
+        Person five = new Person("bnm", "16");
+        list.add(one);
+        list.add(two);
+        list.add(three);
+        list.add(four);
+        list.add(five);
+        // list.forEach(System.out::println);
         list.forEach((s)->{
-            if (s.equals("1")) {
-                s.replace("1", "11");
+            if (s.getName().equals("lzy")) {
+                s.setAge("123");
             }
         });
-        // for (int i = 0; i < list.size(); i++) {
-        //     if (s.equals("1")) {
-        //         s.replace("1", "11");
-        //     }
-        // }
-        list.forEach(System.out::println);
+        list.forEach(System.out::println);*/
     }
 
 }
