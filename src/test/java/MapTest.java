@@ -1,6 +1,8 @@
+import cn.hutool.core.util.ArrayUtil;
 import juc.function.User;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,6 +127,14 @@ public class MapTest {
         String s = "lzy";
 
         s.charAt(1);
+    }
+
+    @Test
+    public void test222(){
+        byte[] a1 = new byte[]{1, 2, 4, 5};
+        byte[] a2 = new byte[]{-1, -2, 4, 5};
+        byte[] bytes = ArrayUtil.addAll(a1, a2);
+        // System.arraycopy();
     }
 
     public static byte[] changeBytes(byte[] a) {
