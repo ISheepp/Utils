@@ -3,6 +3,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.fasterxml.jackson.databind.util.LRUMap;
+import com.google.common.collect.Lists;
 import entity.Apple;
 import entity.BeanBook;
 import entity.BeanBook2;
@@ -23,10 +24,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -628,5 +626,48 @@ public class IsheepTests {
         int i = s1.compareTo(s2);
         System.out.println(i);
     }
+
+    @Test
+    public void testJson(){
+        List<String> list = new ArrayList<>();
+        list.add("123");
+        list.add("123");
+        // 相当于判断有没有盛水的容器
+
+
+        System.out.println(list.isEmpty());
+        System.out.println(list);
+    }
+
+    @Test
+    public void testMap111(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", 1);
+        map.put("2", 2);
+        map.put("3", 3);
+        map.forEach((k,v)->{
+            System.out.println("key: " + k + "   " + "value: " + v);
+        });
+        map.clear();
+        map.forEach((k,v)->{
+            System.out.println("key: " + k + "   " + "value: " + v);
+        });
+    }
+
+    @Test
+    public void test11123231(){
+        HashMap<String, String> userContents = new HashMap<>();
+        userContents.put("a", "1");
+        userContents.put("c","3");
+        userContents.put("asas", "asaq");
+        userContents.put("aaa","33");
+        System.out.println("before : " + userContents);
+        for(Iterator<Map.Entry<String, String>> it = userContents.entrySet().iterator() ; it.hasNext();){
+            Map.Entry<String, String> item = it.next();
+            it.remove();
+        }
+        System.out.println("after : " + userContents);
+    }
+
 
 }
