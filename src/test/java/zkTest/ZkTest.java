@@ -1,8 +1,10 @@
 package zkTest;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.io.FileUtil;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,13 @@ public class ZkTest {
         String date = "2021/1/2";
         Date x = Convert.toDate(date);
         System.out.println(x);
+    }
+
+    @Test
+    public void testFileUtil(){
+        File[] files = FileUtil.ls("D:\\pai");
+        List<File> fileList = Convert.toList(File.class, files);
+        fileList.forEach(System.out::println);
     }
 
 }

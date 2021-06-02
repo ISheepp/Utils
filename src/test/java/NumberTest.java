@@ -15,6 +15,7 @@ public class NumberTest {
             System.out.println("222");
         }
         System.out.println(list);
+        System.out.println(list.size());
     }
 
 }

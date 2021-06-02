@@ -17,6 +17,7 @@ import sun.security.util.AuthResources_it;
 
 import java.lang.reflect.*;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.ParseException;
@@ -94,6 +95,7 @@ public class IsheepTests {
     public void testStu() {
         Student student = new Student();
         student.setName("yyy");
+        student.setDate(new Date());
         System.out.println(JSON.toJSONString(student,
                 SerializerFeature.PrettyFormat,
                 SerializerFeature.UseSingleQuotes));
@@ -667,6 +669,16 @@ public class IsheepTests {
             it.remove();
         }
         System.out.println("after : " + userContents);
+    }
+
+    @Test
+    public void testmap(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("1", "lzy");
+
+        System.out.println(map.getOrDefault("2", 1));
+        String s = "是的";
+        System.out.println(Arrays.toString(s.getBytes(StandardCharsets.UTF_8)));
     }
 
 
