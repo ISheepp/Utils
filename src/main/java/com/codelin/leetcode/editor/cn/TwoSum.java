@@ -45,29 +45,35 @@
 package com.codelin.leetcode.editor.cn;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class TwoSum{
     public static void main(String[] args) {
         Solution solution = new TwoSum().new Solution();
-        int[] nums = {3, 2, 4};
-        int target = 6;
+        // int[] nums = {3, 2, 4};
+        // int target = 6;
+        int[] nums = {2, 3, 5, 7};
+        int target = 8;
         int[] num = solution.twoSum(nums, target);
         System.out.println(Arrays.toString(num));
     }
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        int[] num = new int[2];
+
+        // Map存的是数组的值和索引
+        // 一次遍历，有则直接取，无则存，类似缓存的使用方法
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] + nums[j] == target) {
-                    num[0] = i;
-                    num[1] = j;
-                    return num;
-                }
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i};
             }
+            map.put(nums[i], i);
         }
-        return nums;
+        throw new IllegalArgumentException("no answer");
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
