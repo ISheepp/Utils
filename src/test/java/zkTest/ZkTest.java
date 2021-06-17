@@ -2,13 +2,20 @@ package zkTest;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import static org.junit.Assert.*;
 
 /**
  * @author 林子洋靓
@@ -43,6 +50,38 @@ public class ZkTest {
         File[] files = FileUtil.ls("D:\\pai");
         List<File> fileList = Convert.toList(File.class, files);
         fileList.forEach(System.out::println);
+    }
+
+    @Test
+    public void testInstant(){
+        DecimalFormat df = new DecimalFormat("0.000");
+        Double num = 0.000000000000002;
+        double num1 = 2.000000000000002;
+
+        String format = df.format(num1);
+        BigDecimal bg = new BigDecimal(format);
+        System.err.println(Double.valueOf(format));
+        System.out.println(format);
+        double x = bg.doubleValue();
+        System.out.println(x);
+    }
+
+    @Test
+    public void testCache() throws ExecutionException {
+        Multimap<String, String> multimap = ArrayListMultimap.create();
+        multimap.put("csc","1");
+        multimap.put("lwl","1");
+        multimap.put("csc","1");
+        multimap.put("lwl","one");
+        System.out.println(multimap.get("csc"));
+        System.out.println(multimap.get("lwl"));
+
+    }
+
+    @Test
+    public void testENV(){
+
+
     }
 
 }

@@ -41,13 +41,12 @@
 // Related Topics 数组 哈希表 
 // 👍 10343 👎 0
 
-  
+
 package com.codelin.leetcode.editor.cn;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 public class TwoSum{
     public static void main(String[] args) {
@@ -62,7 +61,6 @@ public class TwoSum{
     //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-
         // Map存的是数组的值和索引
         // 一次遍历，有则直接取，无则存，类似缓存的使用方法
         Map<Integer, Integer> map = new HashMap<>();
