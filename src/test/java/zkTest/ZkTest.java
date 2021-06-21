@@ -80,8 +80,31 @@ public class ZkTest {
 
     @Test
     public void testENV(){
+        int a = 5;
+        int b = 3;
+        System.out.println(a | b);
+        System.out.println(a & b);
+        System.out.println(a ^ b);
+        // System.err.println(a |= b);
+        // System.err.println(a &= b);
+        // System.err.println(a ^= b);
+
+    }
+
+    @Test
+    public void test111(){
+        System.out.println(20>>6);
+    }
+
+    @Test
+    public void testAi(){
+
+        double PI = 3.14;
+        int r = 2;
+
 
 
     }
+
 
 }
