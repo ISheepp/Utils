@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.StringJoiner;
 import java.util.concurrent.ExecutionException;
 import static org.junit.Assert.*;
 
@@ -98,11 +99,10 @@ public class ZkTest {
 
     @Test
     public void testAi(){
-
-        double PI = 3.14;
-        int r = 2;
-
-
+        StringJoiner joiner = new StringJoiner("hello");
+        joiner.add("ss");
+        joiner.add("sssssss");
+        System.out.println(joiner.toString());
 
     }
 
