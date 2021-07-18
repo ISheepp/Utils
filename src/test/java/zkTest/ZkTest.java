@@ -98,11 +98,9 @@ public class ZkTest {
 
     @Test
     public void testAi(){
-
-        double PI = 3.14;
-        int r = 2;
-
-
+        Integer i = null;
+        int x = i.intValue();
+        System.out.println(x);
 
     }
 
