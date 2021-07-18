@@ -101,6 +101,10 @@ public class ZkTest {
         Integer i = null;
         int x = i.intValue();
         System.out.println(x);
+        StringJoiner joiner = new StringJoiner("hello");
+        joiner.add("ss");
+        joiner.add("sssssss");
+        System.out.println(joiner.toString());
 
     }
 
