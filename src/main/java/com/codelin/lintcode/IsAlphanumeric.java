@@ -1,5 +1,6 @@
 package com.codelin.lintcode;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.springframework.util.StringUtils;
@@ -16,8 +17,9 @@ public class IsAlphanumeric {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] num = {9,8,7,6,5,4,3,2,1,0};
-        System.out.println(Arrays.toString(solution.plusOne(num)));
+        // int[] num = {9,8,7,6,5,4,3,2,1,0};
+        solution.prime(5);
+        System.out.println();
     }
 
 }
@@ -302,14 +304,61 @@ class Solution {
     }
 
     /**
-     * 判断一个非负整数 n 的二进制表示是否为回文数
+     * 判断一个非负整数 n 的二进制表示是否为回文数 我们保证 0 <= n <= 2^32 - 1
+     *
+     * 样例1
+     *
+     * 输入: n = 0
+     * 输出: True
+     * 解释:
+     * 0 的二进制表示为：0。
+     * 样例2
+     *
+     * 输入: n = 3
+     * 输出: True
+     * 解释:
+     * 3 的二进制表示为：11。
+     * 样例3
+     *
+     * 输入: n = 4
+     * 输出: False
+     * 解释:
+     * 4 的二进制表示为：100。
+     * 样例4
+     *
+     * 输入: n = 6
+     * 输出: False
+     * 解释:
+     * 6 的二进制表示为：110。
      *
      * @param n: non-negative integer n.
      * @return return whether a binary representation of a non-negative integer n is a palindrome.
      */
     public boolean isPalindrome(int n) {
         // Write your code here
-        return true;
+        String binaryString = Integer.toBinaryString(n);
+        StringBuilder sb = new StringBuilder(binaryString);
+        return binaryString.equals(sb.reverse().toString());
+    }
+
+    /**
+     * 寻找素数n以内 100以内
+     *
+     * @param n: an integer
+     * @return return all prime numbers within n.
+     */
+    public List<Integer> prime(int n) {
+        // write your code here
+        int num = 0;
+        for (int i = 3; i <= n; i++) {
+            for (int j = 2; j < i; j++) {
+                if (i % j == 0) {
+                    num++;
+                }
+            }
+        }
+        System.out.println(num);
+        return null;
     }
 
 }
