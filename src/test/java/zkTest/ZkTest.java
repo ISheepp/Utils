@@ -14,7 +14,11 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.StringJoiner;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static org.junit.Assert.*;
 
 /**
@@ -106,6 +110,14 @@ public class ZkTest {
         joiner.add("sssssss");
         System.out.println(joiner.toString());
 
+    }
+
+    @Test
+    public void testRegex(){
+        // regex匹配邮箱
+        Pattern pattern = Pattern.compile("^.+@.+$");
+        Matcher asdasd = pattern.matcher("810230865@qq.com");
+        System.out.println(asdasd);
     }
 
 

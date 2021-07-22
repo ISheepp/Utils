@@ -1,6 +1,7 @@
 package lzyTest;
 
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.thread.ThreadFactoryBuilder;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -18,6 +20,12 @@ import java.util.stream.Collectors;
  * @create 2021-07-05 16:56:13
  */
 public class TestLists {
+
+    private static ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
+            .setNamePrefix("demo-pool-%d").build();
+
+    private static ExecutorService pool = new ThreadPoolExecutor(5, 100, 0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingDeque<>(128), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 
     @Test
     public void test(){
