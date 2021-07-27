@@ -4,6 +4,7 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import entity.BigStudent;
 import entity.Person;
@@ -187,6 +188,57 @@ public class ZkTest {
                         )
                 );
         sortedKeyMap.forEach((k,v)-> System.out.println("key: " + k + "   value:" + v));
+    }
+
+    @Test
+    public void testListToBigMap(){
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
+        Map<String, Object> map3 = new HashMap<>();
+        Map<String, Object> map4 = new HashMap<>();
+        Map<String, Object> map5 = new HashMap<>();
+        Map<String, Object> map6 = new HashMap<>();
+        map.put("serverName", "svc-aompsuanfarongqiyanshi-86");
+        map.put("id", "instance.mem.free");
+        map.put("value", 1.69);
+
+        map1.put("serverName", "svc-aompsuanfarongqiyanshi-86");
+        map1.put("id", "instance.mem.total");
+        map1.put("value", 2.07);
+
+        map2.put("serverName", "svc-aompsuanfarongqiyanshi-91");
+        map2.put("id", "instance.mem.free");
+        map2.put("value", 3);
+
+        map3.put("serverName", "svc-aompsuanfarongqiyanshi-91");
+        map3.put("id", "instance.mem.total");
+        map3.put("value", 2.07);
+
+        map4.put("serverName", "svc-aompsuanfarongqiyanshi-89");
+        map4.put("id", "instance.mem.free");
+        map4.put("value", 1.08);
+
+        map5.put("serverName", "svc-aompsuanfarongqiyanshi-89");
+        map5.put("id", "instance.mem.total");
+        map5.put("value", 2.07);
+        List<Map<String, Object>> container = Lists.newArrayList(
+                map, map1, map2, map3, map4, map5
+        );
+
+        // List转Map老办法
+        Map<String, List<Map<String, Object>>> bigMap = new HashMap<>();
+        for (Map<String, Object> stringObjectMap : container) {
+            List<Map<String, Object>> list = bigMap.get(stringObjectMap.get("serverName"));
+            if (list == null) {
+                list = new ArrayList<>();
+                bigMap.put(stringObjectMap.get("serverName").toString(), list);
+            }
+            list.add(stringObjectMap);
+        }
+
+        // 新办法
+
     }
 
 
