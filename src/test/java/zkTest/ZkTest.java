@@ -5,19 +5,20 @@ import cn.hutool.core.io.FileUtil;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import entity.BigStudent;
+import entity.Person;
 import org.junit.Test;
 
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.Duration;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -119,6 +120,75 @@ public class ZkTest {
         Matcher asdasd = pattern.matcher("810230865@qq.com");
         System.out.println(asdasd);
     }
+
+    /**
+     * Optional测试
+     *
+     */
+    @Test
+    public void testOptional(){
+        Person person = new Person();
+        person = null;
+
+        Person person1 = Optional.ofNullable(person).orElseGet(() -> {
+            System.out.println("1111");
+            return new Person("111");
+        });
+        System.out.println(person1);
+
+    }
+
+    @Test
+    public void testForEachOrdered(){
+        List<String> list = Lists.newArrayList("C","A", "B");
+        // list.forEach(System.out::println);
+        // System.err.println("===================");
+        list.stream().forEachOrdered(System.out::println);
+        list.stream().sorted((o1, o2) -> 0);
+    }
+
+    /**
+     * 测试比较器
+     */
+    @Test
+    public void testComparator(){
+        BigStudent bigStudent = new BigStudent("lzy", 3);
+        BigStudent bigStudent1 = new BigStudent("lzy2", 1);
+        BigStudent bigStudent2 = new BigStudent("lzy3", 5);
+        List<BigStudent> list = Lists.newArrayList(bigStudent, bigStudent1, bigStudent2);
+        BigStudent bigStudent3 = list.stream().sorted(new Comparator<BigStudent>() {
+            @Override
+            public int compare(BigStudent o1, BigStudent o2) {
+                return o2.getAge() - o1.getAge();
+            }
+        }).findFirst().get();
+        System.out.println(bigStudent3);
+    }
+
+    @Test
+    public void testListToMap(){
+        BigStudent bigStudent = new BigStudent("lzy", 3);
+        BigStudent bigStudent1 = new BigStudent("lzy2", 1);
+        BigStudent bigStudent2 = new BigStudent("lzy3", 5);
+        List<BigStudent> list = Lists.newArrayList(bigStudent, bigStudent1, bigStudent2);
+        Map<Integer, BigStudent> collect = list.stream().collect(Collectors.toMap(BigStudent::getAge,
+                bigStudent3 -> bigStudent3));
+        // collect.forEach((k,v)-> System.out.println("key: " + k + "   value:" + v));
+        Map<Integer, BigStudent> sortedKeyMap = collect.entrySet().stream()
+                .sorted(Map.Entry.<Integer, BigStudent>comparingByKey().reversed())
+                .collect(
+                        Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                // 相同key的合并规则
+                                (oldVal, newVal) -> oldVal,
+                                // 指定生成的Map类型
+                                LinkedHashMap::new
+                        )
+                );
+        sortedKeyMap.forEach((k,v)-> System.out.println("key: " + k + "   value:" + v));
+    }
+
 
 
 }

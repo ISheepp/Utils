@@ -17,9 +17,9 @@ public class IsAlphanumeric {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        // int[] num = {9,8,7,6,5,4,3,2,1,0};
-        solution.prime(5);
-        System.out.println();
+        int[] A = {1, 4, 2, 3};
+        solution.sortIntegers(A);
+        System.out.println(Arrays.toString(A));
     }
 
 }
@@ -359,6 +359,25 @@ class Solution {
         }
         System.out.println(num);
         return null;
+    }
+
+    /**
+     * 冒泡排序
+     *
+     * @param A 数组
+     */
+    public void sortIntegers(int[] A) {
+        // write your code here
+        for (int i = 0; i < A.length; i++) {
+            for (int j = i+1; j < A.length; j++) {
+                if (A[i] > A[j]) {
+                    int temp;
+                    temp = A[i];
+                    A[i] = A[j];
+                    A[j] = temp;
+                }
+            }
+        }
     }
 
 }

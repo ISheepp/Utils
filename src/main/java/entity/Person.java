@@ -15,6 +15,17 @@ public class Person {
         this.name = name;
     }
 
+    public Person() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
