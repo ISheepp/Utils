@@ -241,6 +241,15 @@ public class ZkTest {
 
     }
 
+    @Test
+    public void testStringFormat(){
+        // 丢失精度
+        BigDecimal bigDecimal1 = new BigDecimal(0.11d);
+        BigDecimal bigDecimal = BigDecimal.valueOf(0.11d);
+        System.out.println(bigDecimal1);
+        System.out.println(bigDecimal);
+    }
+
 
 
 }
