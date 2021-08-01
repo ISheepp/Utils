@@ -1,12 +1,11 @@
 package zkTest;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.google.common.cache.*;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.Duration;
+import java.util.concurrent.ExecutionException;
+
 
 /**
  * @author 林子洋靓
@@ -14,10 +13,27 @@ import java.util.Map;
  */
 public class GuavaTest {
 
+    /**
+     * LoadingCache
+     */
+    private LoadingCache<Integer, Long> cacheMap = CacheBuilder.newBuilder().initialCapacity(10)
+            .concurrencyLevel(10)
+            .expireAfterAccess(Duration.ofSeconds(10))
+            .weakValues()
+            .recordStats()
+            .removalListener((RemovalListener<Integer, Long>) removalNotification -> System.out.println(removalNotification.getValue()))
+            .build(new CacheLoader<Integer, Long>() {
+                @Override
+                public Long load(Integer integer) {
+                    return System.currentTimeMillis();
+                }
+            });
+
+    /**
+     * 测试Multiset
+     */
     @Test
-    public void test(){
-        List<String> list = Lists.newArrayList();
-        Map<String, Object> map = Maps.newHashMap();
+    public void test() throws ExecutionException {
 
     }
 
