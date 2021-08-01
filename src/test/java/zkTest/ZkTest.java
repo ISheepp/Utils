@@ -8,10 +8,14 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import entity.BigStudent;
 import entity.Person;
+import entity.SerStudent;
+import entity.Student;
+import okhttp3.*;
 import org.junit.Test;
 
-import java.io.File;
+import java.io.*;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.*;
@@ -166,6 +170,10 @@ public class ZkTest {
         System.out.println(bigStudent3);
     }
 
+    /**
+     *  List通过stream转Map
+     *
+     */
     @Test
     public void testListToMap(){
         BigStudent bigStudent = new BigStudent("lzy", 3);
@@ -190,6 +198,11 @@ public class ZkTest {
         sortedKeyMap.forEach((k,v)-> System.out.println("key: " + k + "   value:" + v));
     }
 
+    /**
+     * <p>
+     *     {@code List<Map<String, Object>>}转{@code Map<String, List<Map<String, Object>>>}
+     * </p>
+     */
     @Test
     public void testListToBigMap(){
         Map<String, Object> map = new HashMap<>();
@@ -236,9 +249,27 @@ public class ZkTest {
             }
             list.add(stringObjectMap);
         }
+        // 新办法(暂时找不到)
+    }
 
-        // 新办法
-
+    /**
+     * 测试okHttp
+     *
+     * @throws IOException IOException
+     */
+    @Test
+    public void testaa() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        String mapping = "{\"properties\": {\"id\": {\"type\": \"keyword\"},\"tags\": {\"type\": \"keyword\"}," +
+                "\"serverName\": {\"type\": \"keyword\"},\"time\": {\"type\": \"date\"},\"value\": {\"type\": " +
+                "\"float\"}}}";
+        // System.out.println(mapping);
+        final Request request = new Request.Builder()
+                .url("http://172.17.1.40:9200/lookout-active-test-metricsl/metrics/_mapping")
+                .put(RequestBody.create(MediaType.parse("application/json"), mapping.getBytes(StandardCharsets.UTF_8)))
+                .build();
+        Response execute = client.newCall(request).execute();
+        System.out.println(execute.body().toString());
     }
 
     @Test
@@ -250,6 +281,51 @@ public class ZkTest {
         System.out.println(bigDecimal);
     }
 
+    /**
+     * 序列化测试
+     *
+     */
+    @Test
+    public void testJSON() throws IOException {
+        FileOutputStream fos = new FileOutputStream("D:\\temp.txt");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        // Student没有序列化
+        Student student = new Student();
+        student.setDate(new Date());
+        student.setName("111");
+        oos.writeObject(student);
+        oos.flush();
+        oos.close();
+    }
+
+    /**
+     * 序列化
+     *
+     */
+    @Test
+    public void testSer() throws IOException {
+        FileOutputStream fos = new FileOutputStream("D:\\temp1.txt");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        SerStudent serStudent = new SerStudent();
+        // 序列化
+        serStudent.setDate(new Date());
+        serStudent.setName("lzy");
+        oos.writeObject(serStudent);
+        oos.flush();
+        oos.close();
+    }
+
+    /**
+     * 反序列化
+     *
+     */
+    @Test
+    public void testSerEx() throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream("D:\\temp.txt");
+        ObjectInputStream oin = new ObjectInputStream(fis);
+        Student student = ((Student) oin.readObject());
+        System.out.println(student.getDate());
+    }
 
 
 }

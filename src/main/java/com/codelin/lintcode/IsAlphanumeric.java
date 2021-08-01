@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author 林子洋
@@ -18,8 +19,7 @@ public class IsAlphanumeric {
     public static void main(String[] args) {
         Solution solution = new Solution();
         int[] A = {1, 4, 2, 3};
-        solution.sortIntegers(A);
-        System.out.println(Arrays.toString(A));
+        System.out.println(solution.secondMax(A));
     }
 
 }
@@ -349,16 +349,21 @@ class Solution {
      */
     public List<Integer> prime(int n) {
         // write your code here
-        int num = 0;
-        for (int i = 3; i <= n; i++) {
-            for (int j = 2; j < i; j++) {
+        boolean flag = true;
+        List<Integer> list = new ArrayList<>();
+        for (int i = 2; i <= n; i++) {
+            for (int j = 2; j < Math.sqrt(i); j++) {
+                // 不是素数
                 if (i % j == 0) {
-                    num++;
+                    flag = false;
                 }
             }
+            if (flag) {
+                list.add(i);
+            }
+            flag = true;
         }
-        System.out.println(num);
-        return null;
+        return list;
     }
 
     /**
@@ -378,6 +383,27 @@ class Solution {
                 }
             }
         }
+    }
+
+    /**
+     * 选择排序
+     */
+    public void sortXuanZe() {
+
+    }
+
+    /**
+     * 寻找数组中第二大的数
+     * input [1, 1, 2, 2]
+     * output 2
+     *
+     * @param nums: An integer array
+     * @return: The second max number in the array.
+     */
+    public int secondMax(int[] nums) {
+        // write your code here
+        // 数组转List
+        return Arrays.stream(nums).boxed().sorted((o1, o2) -> o2 - o1).collect(Collectors.toList()).get(1);
     }
 
 }
