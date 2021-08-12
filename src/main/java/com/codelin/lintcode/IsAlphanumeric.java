@@ -398,7 +398,7 @@ class Solution {
      * output 2
      *
      * @param nums: An integer array
-     * @return: The second max number in the array.
+     * @return The second max number in the array.
      */
     public int secondMax(int[] nums) {
         // write your code here

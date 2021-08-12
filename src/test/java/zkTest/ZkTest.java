@@ -2,6 +2,8 @@ package zkTest;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -12,6 +14,7 @@ import entity.SerStudent;
 import entity.Student;
 import okhttp3.*;
 import org.junit.Test;
+import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -44,8 +47,8 @@ public class ZkTest {
     @Test
     public void testZuanShi(){
         Sheep<String> sheep = new Sheep<>();
-        String s = sheep.getLzyTest("s");
-        System.out.println(s);
+        Double d = sheep.getLzyTest(12d);
+        System.out.println(d);
     }
 
     @Test
@@ -327,5 +330,17 @@ public class ZkTest {
         System.out.println(student.getDate());
     }
 
+    @Test
+    public void testLzy(){
+        // 字符串转List
+        String s = "a,b,c";
+        List<String> strings = Splitter.on(",").splitToList(s);
+        // strings.forEach(System.out::println);
+        // List转字符串
+        String join = Joiner.on("-").join(strings);
+        // System.out.println(join)
+        String cmd = "ps aux|grep kafka|grep -v \"grep\"|awk '{print $3}'";
+        System.out.println(cmd);
+    }
 
 }

@@ -9,7 +9,7 @@ public class Sheep<T> {
     private T name;
 
     // 方法前标明<T>则表示这个方法中的T不与类中的T冲突
-    public <T> T getLzyTest(T t) {
+    public <F> F getLzyTest(F t) {
         return t;
     }
 }
