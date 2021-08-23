@@ -8,7 +8,7 @@ public class Sheep<T> {
 
     private T name;
 
-    // 方法前标明<T>则表示这个方法中的T不与类中的T冲突
+    // 方法前标明<F>则表示这个方法中的F不与类中的F冲突
     public <F> F getLzyTest(F t) {
         return t;
     }

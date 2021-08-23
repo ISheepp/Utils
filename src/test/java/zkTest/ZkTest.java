@@ -1,5 +1,6 @@
 package zkTest;
 
+import aenum.Color;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
 import com.google.common.base.Joiner;
@@ -335,12 +336,22 @@ public class ZkTest {
         // 字符串转List
         String s = "a,b,c";
         List<String> strings = Splitter.on(",").splitToList(s);
-        // strings.forEach(System.out::println);
+        strings.forEach(System.out::println);
         // List转字符串
         String join = Joiner.on("-").join(strings);
-        // System.out.println(join)
-        String cmd = "ps aux|grep kafka|grep -v \"grep\"|awk '{print $3}'";
-        System.out.println(cmd);
+        System.out.println(join);
+    }
+
+    @Test
+    public void testlzy(){
+        DecimalFormat decimalFormat = new DecimalFormat("##.0000%");
+        // System.out.println((double) (Integer.parseInt("1122") / 1800));
+        System.out.println(Double.parseDouble(decimalFormat.format(Integer.parseInt("1122") / 1800)));
+    }
+
+    @Test
+    public void testENUM(){
+        System.out.println(Color.RED.name());
     }
 
 }
