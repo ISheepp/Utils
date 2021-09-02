@@ -3,6 +3,9 @@ package zkTest;
 import aenum.Color;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
@@ -15,6 +18,7 @@ import entity.SerStudent;
 import entity.Student;
 import okhttp3.*;
 import org.junit.Test;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -352,6 +356,34 @@ public class ZkTest {
     @Test
     public void testENUM(){
         System.out.println(Color.RED.name());
+    }
+
+    @Test
+    public void testSOUT(){
+        String TABLE_TYPE_DOC =
+                "By default, the JDBC connector will only detect tables with type TABLE from the source "
+                        + "Database. This config allows a command separated list of table types to extract. Options"
+                        + " include:\n"
+                        + "  * TABLE\n"
+                        + "  * VIEW\n"
+                        + "  * SYSTEM TABLE\n"
+                        + "  * GLOBAL TEMPORARY\n"
+                        + "  * LOCAL TEMPORARY\n"
+                        + "  * ALIAS\n"
+                        + "  * SYNONYM\n"
+                        + "  In most cases it only makes sense to have either TABLE or VIEW.";
+        System.out.println(TABLE_TYPE_DOC);
+    }
+
+    @Test
+    public void testJSONObject(){
+        String[] split = StringUtils.split("OD_GENERATE|2.0.0", "|");
+        String codeKeyPrefix = split[0];
+        System.out.println(codeKeyPrefix);
+
+        String s = "ALGORITHM:MODULE:svc-aompquanxilukourongqi-91:OD_GENERATE|2.0.0";
+        String[] split1 = s.split(":");
+        System.out.println(Arrays.toString(split1));
     }
 
 }
