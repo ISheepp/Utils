@@ -16,6 +16,7 @@ import entity.BigStudent;
 import entity.Person;
 import entity.SerStudent;
 import entity.Student;
+import juc.function.User;
 import okhttp3.*;
 import org.junit.Test;
 import org.springframework.util.Assert;
@@ -384,6 +385,37 @@ public class ZkTest {
         String s = "ALGORITHM:MODULE:svc-aompquanxilukourongqi-91:OD_GENERATE|2.0.0";
         String[] split1 = s.split(":");
         System.out.println(Arrays.toString(split1));
+    }
+
+    @Test
+    public void testStr(){
+        List<User> list = Lists.newArrayList(
+                new User(5, "lzy", 22),
+                new User(2,"222", 12),
+                new User(3, "333", 33),
+                new User(3, "111", 111)
+        );
+        Map<Integer, List<User>> collect = list.stream().collect(Collectors.groupingBy(User::getId));
+        collect.forEach((k,v) -> {
+            System.out.println(k + "==========" + v);
+        });
+        for (Map.Entry<Integer, List<User>> entry : collect.entrySet()) {
+            List<User> value = entry.getValue();
+            System.out.println(value.size());
+        }
+    }
+
+    @Test
+    public void testSwitch(){
+        int num = 0;
+        switch (num) {
+            case 0:
+                System.out.println("num等于0");
+
+            case 1:
+                System.out.println("num为1");
+        }
+
     }
 
 }
