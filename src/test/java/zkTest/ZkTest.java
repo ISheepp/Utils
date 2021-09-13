@@ -3,14 +3,10 @@ package zkTest;
 import aenum.Color;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import entity.BigStudent;
 import entity.Person;
@@ -19,22 +15,20 @@ import entity.Student;
 import juc.function.User;
 import okhttp3.*;
 import org.junit.Test;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import zkTest.collection.DataAccess;
+import zkTest.domain.TaskInspectDTO;
+import zkTest.domain.TerminalMessage;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
-import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.*;
 
 /**
  * @author 林子洋靓
@@ -407,15 +401,70 @@ public class ZkTest {
 
     @Test
     public void testSwitch(){
-        int num = 0;
-        switch (num) {
-            case 0:
-                System.out.println("num等于0");
+        System.out.println(Calendar.getInstance());
+        List<DataAccess> countList = Lists.newArrayList(
+                new DataAccess("name", "20210903", 88f),
+                new DataAccess("age", "20210903", 85f),
+                new DataAccess("name", "20210902", 90f),
+                new DataAccess("age", "20210902", 70f)
+        );
+        // key为日期, value为List<DataAccess>
+        Map<String, List<DataAccess>> map = new HashMap<>();
+        Map<String, List<DataAccess>> collect =
+                countList.stream().collect(Collectors.groupingBy(DataAccess::getReportDate));
+        collect.forEach((k, v) -> {
 
-            case 1:
-                System.out.println("num为1");
-        }
+        });
+    }
 
+    @Test
+    public void testSourceSink(){
+        List<String> list = Lists.newArrayList("sink:global-search-user_log_info1",
+                "source:its-http-test",
+                "source:global-search-chongqing_company",
+                "source:global-search-employee2",
+                "sink:global-search-employee2",
+                "source:global-search-employee1",
+                "sink:global-search-employee1",
+                "sink:global-search-chongqing_vehicle",
+                "sink:global-search-chongqing_company",
+                "source:global-search-chongqing_vehicle",
+                "source:global-search-user_log_info1");
+        Map<String, TaskInspectDTO> collect = list.stream().map(name -> name.replaceFirst("^(source:|sink:)", ""))
+                .collect(Collectors.toSet())
+                .stream()
+                .collect(Collectors.toMap(name -> name, TaskInspectDTO::new));
+        collect.forEach((k, v) -> {
+            System.out.println("name: " + k);
+            System.out.println("value: " + v);
+        });
+    }
+
+    @Test
+    public void testLocalDate() {
+        Map<String, String> map = new HashMap<>();
+        map.put("1", "1");
+        map.put("2", "2");
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("3", "3");
+        Map<String, String> allMap = new HashMap<>();
+        allMap.putAll(map);
+        allMap.putAll(map2);
+        allMap.forEach((k,v) -> {
+            System.out.println("key : " + k + ", value : " + v
+            );
+        });
+    }
+
+    @Test
+    public void testMAPRemove(){
+        Map<String, String> map = new HashMap<>();
+        map.put("1", "666");
+        map.put("2", "266");
+        System.out.println("被删除的key的value为：" + map.remove("1"));
+        map.forEach((k, v) -> {
+            System.out.println(k + v);
+        });
     }
 
 }
