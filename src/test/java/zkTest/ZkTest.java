@@ -8,10 +8,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import entity.BigStudent;
-import entity.Person;
-import entity.SerStudent;
-import entity.Student;
+import com.google.common.collect.Sets;
+import entity.*;
 import juc.function.User;
 import okhttp3.*;
 import org.junit.Test;
@@ -24,8 +22,12 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -461,10 +463,32 @@ public class ZkTest {
         Map<String, String> map = new HashMap<>();
         map.put("1", "666");
         map.put("2", "266");
-        System.out.println("被删除的key的value为：" + map.remove("1"));
+        System.out.println("被删除的key的value为：" + map.remove("3"));
         map.forEach((k, v) -> {
-            System.out.println(k + v);
+            System.out.println(k + " " + v);
         });
+    }
+
+    @Test
+    public void testCompare(){
+        EntityAge one = new EntityAge("lzy", 22);
+        EntityAge two = new EntityAge("poi", 24);
+        EntityAge three = new EntityAge("hhh", 13);
+        List<EntityAge> list = Lists.newArrayList(one, two, three);
+        List<EntityAge> collect = list.stream().sorted(new Comparator<EntityAge>() {
+            @Override
+            public int compare(EntityAge o1, EntityAge o2) {
+                return o2.getAge() - o1.getAge();
+            }
+        }).collect(Collectors.toList());
+        collect.forEach(System.out::println);
+    }
+
+    @Test
+    public void test123(){
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println(df.format(Float.parseFloat("100")));
+
     }
 
 }

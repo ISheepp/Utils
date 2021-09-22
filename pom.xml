@@ -78,6 +78,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <!--markdown解析-->
+        <dependency>
+            <groupId>com.youbenzi</groupId>
+            <artifactId>MDTool</artifactId>
+            <version>1.2.4</version>
+        </dependency>
+
 
     </dependencies>
 
