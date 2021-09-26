@@ -1,14 +1,14 @@
 package zkTest;
 
 import aenum.Color;
+import aenum.MyEnum;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import entity.*;
 import juc.function.User;
 import okhttp3.*;
@@ -489,6 +489,53 @@ public class ZkTest {
         DecimalFormat df = new DecimalFormat("0.00");
         System.out.println(df.format(Float.parseFloat("100")));
 
+    }
+
+    @Test
+    public void testRandom(){
+        Map<String, Object> map = Maps.newHashMap();
+        Random random = new Random();
+        map.put("name" + random.nextInt(3), "test");
+        map.put("age" + random.nextInt(3), new Random().nextInt(40));
+        map.put("hobby" + random.nextInt(3), new Random().nextInt(40));
+        map.forEach((k, v) -> {
+            System.out.println(k + "   " + v);
+        });
+
+
+        // Random random = new Random(100);
+        // System.out.println(random.nextInt(3));
+    }
+
+    @Test
+    public void testRegex1(){
+        Map<String, Object> map1 = Maps.newHashMap();
+        map1.put("1", "1");
+        Map<String, Object> map2 = Maps.newHashMap();
+        map2.put("1", "2");
+        Map<String, Object> finalCOnf = Maps.newHashMap();
+        finalCOnf.putAll(map1);
+        finalCOnf.putAll(map2);
+        finalCOnf.forEach((k, v) -> {
+            System.out.println(k + v);
+        });
+    }
+
+
+    @Test
+    public void testJsonObject(){
+        List<String> list = Lists.newArrayList(
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
+                "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25",
+                "26", "27", "28", "29", "30"
+        );
+        int index = (list.size() / 7) - 1;
+        List<String> result = Lists.newArrayList();
+        for (int i = index; i < list.size(); i++) {
+            result.add(list.get(i));
+            i = i + index;
+        }
+        result.forEach(System.out::println);
     }
 
 }
