@@ -538,4 +538,21 @@ public class ZkTest {
         result.forEach(System.out::println);
     }
 
+    @Test
+    public void testArith(){
+        List<RuleAssign> list = Lists.newArrayList(
+                new RuleAssign(1, "a", "1001"),
+                new RuleAssign(2, "b", "1002"),
+                new RuleAssign(3, "c", "1003"),
+                new RuleAssign(4, "a", "1001")
+        );
+        // 多字段联合校验 rule和type
+        Set<RuleAssign> set = new TreeSet<>(Comparator.comparing(RuleAssign::getRule)
+                .thenComparing(RuleAssign::getType));
+        set.addAll(list);
+        if (set.size() < list.size()) {
+            System.out.println("rule 在list中不唯一");
+        }
+    }
+
 }
