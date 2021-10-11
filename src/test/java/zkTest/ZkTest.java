@@ -555,4 +555,24 @@ public class ZkTest {
         }
     }
 
+    @Test
+    public void testSplit(){
+        String className = "com.supconit.its.kafka.connect.datahub.datahubSourceConnector";
+        String[] split = className.split("\\.");
+        System.out.println(split[split.length - 1]);
+    }
+
+    /**
+     * 不安全的原始类型
+     * （关于泛型的类型擦除）
+     */
+    public static void add(List list, Object o){
+        list.add(o);
+    }
+    public static void main(String[] args){
+        List<String> list = new ArrayList<>();
+        add(list, 10);
+        String s = list.get(0);
+    }
+
 }
