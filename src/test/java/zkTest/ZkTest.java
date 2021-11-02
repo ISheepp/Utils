@@ -22,12 +22,14 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.function.ToLongFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -560,6 +562,28 @@ public class ZkTest {
         String className = "com.supconit.its.kafka.connect.datahub.datahubSourceConnector";
         String[] split = className.split("\\.");
         System.out.println(split[split.length - 1]);
+    }
+
+    @Test
+    public void testIntegerValueOf() {
+        List<LongValue> longValueList = Lists.newArrayList(
+                new LongValue("1", 1635383888071L),
+                new LongValue("2", 1635383888073L),
+                new LongValue("3", 1635383888072L)
+        );
+
+        List<LongValue> collect =
+                longValueList.stream().sorted(Comparator.comparingLong(LongValue::getTimestamp).reversed()).collect(Collectors.toList());
+        collect.forEach(System.out::println);
+
+        // System.err.println(timestamp);
+    }
+
+    @Test
+    public void testTime() throws ParseException {
+        Map<String, Object> map = new HashMap<>();
+        // todo
+        // map.merge()
     }
 
     /**
