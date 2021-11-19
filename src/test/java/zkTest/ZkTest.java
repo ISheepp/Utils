@@ -13,7 +13,10 @@ import entity.*;
 import juc.function.User;
 import okhttp3.*;
 import org.junit.Test;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import zkTest.collection.DataAccess;
 import zkTest.domain.TaskInspectDTO;
 import zkTest.domain.TerminalMessage;
@@ -29,6 +32,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.ToLongFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -582,8 +586,22 @@ public class ZkTest {
     @Test
     public void testTime() throws ParseException {
         Map<String, Object> map = new HashMap<>();
+        List<String> list = null;
+
         // todo
         // map.merge()
+        System.out.println(CollectionUtils.isEmpty(list));
+    }
+
+    @Test
+    public void testCount(){
+        Date one = new Date(1637290375257L);
+        Date two = new Date(1637290375307L);
+        Date three = new Date(1637290375207L);
+        Date four = new Date(1637290375157L);
+        Date extract = new Date(1637290336247L);
+        Date transform = new Date(1637290375374L);
+
     }
 
     /**

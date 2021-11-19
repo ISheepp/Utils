@@ -54,5 +54,20 @@ public class Student implements Serializable {
         this.name = name;
     }
 
+    public String getPrice() {
+        return price;
+    }
 
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }
