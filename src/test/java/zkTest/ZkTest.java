@@ -6,10 +6,12 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.*;
 import entity.*;
+import juc.forkjoin.ForkJoinDemo;
 import juc.function.User;
 import okhttp3.*;
 import org.junit.Test;
@@ -20,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import zkTest.collection.DataAccess;
 import zkTest.domain.TaskInspectDTO;
 import zkTest.domain.TerminalMessage;
+import zkTest.entity.MessageLog;
+import zkTest.entity.SortDomain;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -595,14 +599,76 @@ public class ZkTest {
 
     @Test
     public void testCount(){
-        Date one = new Date(1637290375257L);
-        Date two = new Date(1637290375307L);
-        Date three = new Date(1637290375207L);
-        Date four = new Date(1637290375157L);
-        Date extract = new Date(1637290336247L);
-        Date transform = new Date(1637290375374L);
+        // Date one = new Date(1637290375257L);
+        // Date two = new Date(1637290375307L);
+        // Date three = new Date(1637290375207L);
+        // Date four = new Date(1637290375157L);
+        // Date extract = new Date(1637290336247L);
+        // Date transform = new Date(1637290375374L);
+        Map<String, List<MessageLog>> map = new HashMap<>();
+        map.put("1", Lists.newArrayList(
+                new MessageLog("EXTRACT", 1),
+                new MessageLog("TRANSFORM", 1),
+                new MessageLog("LOAD", 1)
+        ));
+        map.put("2", Lists.newArrayList(
+                new MessageLog("EXTRACT", 1),
+                new MessageLog("TRANSFORM", 1)
+        ));
+        map.forEach((k, v) -> {
+            System.out.println(k + "==================" + v);
+        });
+
+        map.entrySet().removeIf(entry -> {
+            List<MessageLog> value = entry.getValue();
+            int flag = (int) value.stream().filter(msg -> "EXTRACT".equals(msg.getStage()) || "LOAD".equals(msg.getStage())).count();
+            return flag != 2;
+        });
+
+        System.err.println("============================");
+        map.forEach((k, v) -> {
+            System.err.println(k + "==================" + v);
+        });
+    }
+
+    @Test
+    public void testParallelStream(){
+        List<SortDomain> list = Lists.newArrayList(
+                new SortDomain(4, "four"),
+                new SortDomain(5, "five"),
+                new SortDomain(3, "three"),
+                new SortDomain(1, "one"),
+                new SortDomain(2, "two")
+        );
+        // list.parallelStream().forEach((a) -> {
+        //     System.out.println(Thread.currentThread().getName() + "====>" + a);
+        // });
+        list.parallelStream().forEachOrdered(sortDomain -> {
+            System.out.println(sortDomain.getSortValue());
+        });
 
     }
+
+    @Test
+    public void test12311(){
+        MessageLog msg = new MessageLog();
+        msg.setNum(2);
+        msg.setStage("RADAR");
+
+        List<String> list = Lists.newArrayList(
+                "123123",
+                "23243",
+                "1");
+        List<String> no = new ArrayList<>();
+        // msg.setFooList(no);
+        String x = JSON.toJSONString(msg);
+        System.out.println(x);
+        JSONObject jsonObject = JSON.parseObject(x);
+        List<String> fooList = (List<String>) jsonObject.get("fooList");
+        System.out.println(CollectionUtils.isEmpty(fooList));
+
+    }
+
 
     /**
      * 不安全的原始类型
