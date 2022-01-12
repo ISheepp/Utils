@@ -28,8 +28,8 @@ public class StreamUtils {
         System.out.println("2222");
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
-
     }
+
     public static void main(String[] args) {
         List<Student> list = Lists.newArrayList(
                 new Student("1", "11"),
@@ -37,7 +37,10 @@ public class StreamUtils {
                 new Student("3", "11")
         );
 
-        list.stream().filter(distinctByKey(Student::getPrice)).collect(Collectors.toList()).forEach(System.out::println);
+        list.stream()
+                .filter(distinctByKey(Student::getPrice))
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
     }
 
 }
