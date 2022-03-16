@@ -3,6 +3,8 @@ package zkTest;
 import aenum.Color;
 import aenum.MyEnum;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.ChineseDate;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
@@ -34,6 +36,8 @@ import zkTest.entity.SortDomain;
 import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -657,22 +661,32 @@ public class ZkTest {
 
     @Test
     public void test12311(){
-        MessageLog msg = new MessageLog();
-        msg.setNum(2);
-        msg.setStage("RADAR");
+        // Path p1 = Paths.get(".", "project", "study"); // 构造一个Path对象
+        // System.out.println(p1);
+        // Path p2 = p1.toAbsolutePath(); // 转换为绝对路径
+        // System.out.println(p2);
+        // Path p3 = p2.normalize(); // 转换为规范路径
+        // System.out.println(p3);
+        // File f = p3.toFile(); // 转换为File对象
+        // System.out.println(f);
+        // for (Path p : Paths.get("..").toAbsolutePath()) { // 可以直接遍历Path
+        //     System.out.println("  " + p);
+        // }
+        ChineseDate chineseDate = new ChineseDate(DateUtil.parseDate("1998-11-13"));
+        System.out.println(chineseDate.getChineseYear());
+        System.out.println(chineseDate.getChineseMonth());
+        System.out.println(chineseDate.getChineseDay());
+        System.out.println(chineseDate.getCyclical());
+        System.out.println(chineseDate.getChineseZodiac());
+    }
 
-        List<String> list = Lists.newArrayList(
-                "123123",
-                "23243",
-                "1");
-        List<String> no = new ArrayList<>();
-        // msg.setFooList(no);
-        String x = JSON.toJSONString(msg);
-        System.out.println(x);
-        JSONObject jsonObject = JSON.parseObject(x);
-        List<String> fooList = (List<String>) jsonObject.get("fooList");
-        System.out.println(CollectionUtils.isEmpty(fooList));
-
+    /**
+     * 由农历日期计算公历日期
+     */
+    @Test
+    public void testCalculateChineseDate() {
+        ChineseDate chineseDate = new ChineseDate(1999, 1, 6);
+        System.out.println(chineseDate.getGregorianDate());
     }
 
 

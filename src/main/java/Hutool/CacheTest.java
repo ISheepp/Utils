@@ -16,7 +16,7 @@ public class CacheTest {
         cache.put("2", "222", DateUnit.SECOND.getMillis() * 3);
         cache.put("3", "333", DateUnit.SECOND.getMillis() * 3);
 
-        cache.put("4", "444", DateUnit.SECOND.getMillis() * 3);
+        // cache.put("4", "444", DateUnit.SECOND.getMillis() * 3);
 
         System.out.println(cache.get("1"));
     }

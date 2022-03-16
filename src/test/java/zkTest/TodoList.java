@@ -17,33 +17,34 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class TodoList {
 
-    private static final String TOKEN = "";
+    private static final String TOKEN = "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";
 
     public static void main(String[] args) throws IOException {
         GitHub github = new GitHubBuilder().withAppInstallationToken(TOKEN).build();
-        List<GHIssueComment> comments = github.getRepository("linziyang1106/2021").getIssue(3).getComments();
-        AtomicInteger doneCount = new AtomicInteger();
-        AtomicInteger unDoneCount = new AtomicInteger();
-        comments.forEach(comment -> {
-            String body = comment.getBody();
-            String[] todo = StringUtils.split(body, "\r\n");
-            for (String item : todo) {
-                if (item.startsWith("- [ ] ")) {
-                    unDoneCount.getAndIncrement();
-                } else if (item.startsWith("- [x] ")) {
-                    doneCount.getAndIncrement();
-                }
-            }
-        });
-        int total = doneCount.intValue() + unDoneCount.intValue();
-
-        double doneRate = ((double) doneCount.intValue() / (double) total) * 100;
-        NumberFormat nf = new DecimalFormat();
-        nf.setMaximumFractionDigits(2);
-        System.out.println("all todo count: " + total);
-        System.out.println("done: " + doneCount);
-        System.out.println("undone: " + unDoneCount);
-        System.out.println("done rate: " + nf.format(doneRate) + "%");
+        List<GHIssueComment> comments = github.getRepository("linziyang1106/2021").getIssue(2).getComments();
+        System.out.println(comments.size());
+        // AtomicInteger doneCount = new AtomicInteger();
+        // AtomicInteger unDoneCount = new AtomicInteger();
+        // comments.forEach(comment -> {
+        //     String body = comment.getBody();
+        //     String[] todo = StringUtils.split(body, "\r\n");
+        //     for (String item : todo) {
+        //         if (item.startsWith("- [ ] ")) {
+        //             unDoneCount.getAndIncrement();
+        //         } else if (item.startsWith("- [x] ")) {
+        //             doneCount.getAndIncrement();
+        //         }
+        //     }
+        // });
+        // int total = doneCount.intValue() + unDoneCount.intValue();
+        //
+        // double doneRate = ((double) doneCount.intValue() / (double) total) * 100;
+        // NumberFormat nf = new DecimalFormat();
+        // nf.setMaximumFractionDigits(2);
+        // System.out.println("all todo count: " + total);
+        // System.out.println("done: " + doneCount);
+        // System.out.println("undone: " + unDoneCount);
+        // System.out.println("done rate: " + nf.format(doneRate) + "%");
         // System.out.println(comments.get(0).getBody());
         // String[] split = StringUtils.split(comments.get(0).getBody(), "\r\n");
         // System.out.println(comments.get(0).getBody().startsWith("- [ ] "));
